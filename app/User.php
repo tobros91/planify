@@ -34,4 +34,9 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Project');
     }
+
+    public function tasks()
+    {
+        return $this->morphedByMany('App\Task', 'teamable', 'teams');
+    }
 }

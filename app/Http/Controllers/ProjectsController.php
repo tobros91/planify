@@ -33,7 +33,10 @@ class ProjectsController extends Controller
 
     public function show($project_id)
     {
-        $project = Project::with('tasks')->findOrFail($project_id);
+        $project = Project::with(['tasks.team', 'team.tasks' => function ($query) use ($project_id) {
+            $query->where('project_id', $project_id);
+        }])
+        ->findOrFail($project_id);
 
         return [
             'project' => $project

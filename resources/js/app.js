@@ -24,14 +24,35 @@ const routes = [
         component: require('./components/projects-create')
     },
     {
-        path: '/projects/:id',
-        name: 'projects.view',
-        component: require('./components/projects-view')
+        path: '/projects/:project_id',
+        component: require('./components/projects-view'),
+        children: [
+            {
+                path: '',
+                name: 'projects.view',
+                component: require('./components/projects-view-overview')
+            },
+            {
+                path: 'team',
+                name: 'projects.view.team',
+                component: require('./components/projects-view-team')
+            },
+            {
+                path: 'calendar',
+                name: 'projects.view.calendar',
+                component: require('./components/projects-view-calendar')
+            },
+        ]
     },
     {
-        path: '/projects/:id/tasks/create',
+        path: '/projects/:project_id/tasks/create',
         name: 'tasks.create',
         component: require('./components/tasks-create')
+    },
+    {
+        path: '/projects/:project_id/tasks/:task_id/edit',
+        name: 'tasks.edit',
+        component: require('./components/tasks-edit')
     },
 ]
 
@@ -40,7 +61,10 @@ const router = new VueRouter({
     mode: 'history',
 })
 
+import store from './store'
+
 const app = new Vue({
+    el: '#app',
     router,
-    el: '#app'
+    store
 });
