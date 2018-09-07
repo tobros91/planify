@@ -28,6 +28,11 @@ const routes = [
         name: 'projects.view',
         component: require('./components/projects-view')
     },
+    {
+        path: '/projects/:id/tasks/create',
+        name: 'tasks.create',
+        component: require('./components/tasks-create')
+    },
 ]
 
 const router = new VueRouter({

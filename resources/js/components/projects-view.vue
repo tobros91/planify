@@ -10,15 +10,8 @@
         </div>
     </div>
 
-    <div class="card mt-5">
-        <div class="card-header">
-            Tasks
-        </div>
+    <calendar :tasks="project.tasks" />
 
-        <div class="card-body">
-            <calendar :tasks="project.tasks" />
-        </div>
-    </div>
 </div>
 </template>
 

@@ -1,57 +1,67 @@
 <template>
-<div>
-
-    <div class="row">
-        <div class="col">
-            <i class="fas fa-chevron-left" @click="previousMonth()"></i>
-            <i class="fas fa-chevron-right" @click="nextMonth()"></i>
-            {{ periodMonth }}
+<div class="card mt-5">
+    <div class="card-header">
+        Tasks
+         <div class="btn btn-primary btn-sm float-right" @click="create()">
+            Create task
         </div>
     </div>
 
-    <div class="row no-gutters">
-        <div class="col-1">
-            Week
+    <div class="card-body">
+
+        <div class="row">
+            <div class="col">
+                <i class="fas fa-chevron-left" @click="previousMonth()"></i>
+                <i class="fas fa-chevron-right" @click="nextMonth()"></i>
+                {{ periodMonth }}
+            </div>
         </div>
-        <div class="col">
-            <div class="row no-gutters">
-                <div class="col" v-for="day in ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']">
-                    {{ day }}
+
+        <div class="row no-gutters">
+            <div class="col-1">
+                Week
+            </div>
+            <div class="col">
+                <div class="row no-gutters">
+                    <div class="col" v-for="day in ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']">
+                        {{ day }}
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="row no-gutters weekDaysRow" v-for="chunk in chunkedDates">
+        <div class="row no-gutters weekDaysRow" v-for="chunk in chunkedDates">
 
-        <div class="col-1" style="font-size: 12px;">
-            <h2>{{ chunk[0].week }}</h2>
-        </div>
+            <div class="col-1" style="font-size: 12px;">
+                <h2>{{ chunk[0].week }}</h2>
+            </div>
 
-        <div class="col">
+            <div class="col">
 
-            <div class="row no-gutters" style="overflow: hidden;">
+                <div class="row no-gutters" style="overflow: hidden;">
 
-                <div style="position: relative; width: 100%;">
+                    <div style="position: relative; width: 100%;">
 
-                    <div class="row row-tasks no-gutters"
-                         :class="task.classOffset"
-                         style="background-color: #8c8c8c;"
-                         :style="{ top: tasksTop(task, chunk[0].date)+'px', 'z-index': (100+index) }"
-                         v-for="(task, index) in chunk[0].tasks">
+                        <div class="row row-tasks no-gutters"
+                             :class="task.classOffset"
+                             style="background-color: #8c8c8c;"
+                             :style="{ top: tasksTop(task, chunk[0].date)+'px', 'z-index': (100+index) }"
+                             v-for="(task, index) in chunk[0].tasks">
 
-                        <div :class="[task.classWidth, task.classBorderLeft, task.classBorderRight]">
-                            <span class="d-inline-block w-100 text-truncate">
-                                <b>{{ task.title }}</b>
-                            </span>
+                            <div :class="[task.classWidth, task.classBorderLeft, task.classBorderRight]">
+                                <span class="d-inline-block w-100 text-truncate">
+                                    <b>{{ task.title }}</b>
+                                </span>
+                            </div>
+
                         </div>
 
                     </div>
 
-                </div>
+                    <div class="col date" v-for="date in chunk" v-bind:class="{ active: date.in_period }">
+                        {{ date.day }}
+                    </div>
 
-                <div class="col date" v-for="date in chunk" v-bind:class="{ active: date.in_period }">
-                    {{ date.day }}
                 </div>
 
             </div>
@@ -158,6 +168,11 @@
         },
 
         methods: {
+
+            create ()
+            {
+                this.$router.push({ name: 'tasks.create', params: { id: this.$route.params.id }})
+            },
 
             previousMonth ()
             {
