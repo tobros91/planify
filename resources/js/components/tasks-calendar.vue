@@ -47,7 +47,9 @@
                              :style="{ top: tasksTop(task, chunk[0].date)+'px', 'z-index': (100+index) }"
                              v-for="(task, index) in chunk[0].tasks">
 
-                            <div :class="[task.classWidth, task.classBorderLeft, task.classBorderRight]" style="background-color: #8c8c8c;">
+                            <div :class="[task.classWidth, task.classBorderLeft, task.classBorderRight]"
+                                 style="background-color: #8c8c8c;"
+                                 @click="edit(task.id)">
                                 <span class="d-inline-block w-100 text-truncate">
                                     <b>{{ task.title }}</b>
                                 </span>
@@ -170,7 +172,12 @@
 
             create ()
             {
-                this.$router.push({ name: 'tasks.create', params: { id: this.$route.params.id }})
+                this.$router.push({ name: 'tasks.create', params: { project_id: this.$route.params.project_id }})
+            },
+
+            edit (task_id)
+            {
+                this.$router.push({ name: 'tasks.edit', params: { project_id: this.$route.params.project_id, task_id: task_id }})
             },
 
             previousMonth ()

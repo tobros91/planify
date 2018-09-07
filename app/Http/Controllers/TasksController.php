@@ -42,9 +42,9 @@ class TasksController extends Controller
         return $task;
     }
 
-    public function edit(Task $task)
+    public function edit(Project $project, Task $task)
     {
-        //
+        return $task;
     }
 
     public function update(Request $request, Task $task)

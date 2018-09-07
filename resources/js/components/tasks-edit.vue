@@ -1,7 +1,7 @@
 <template>
-<div class="card">
+<div class="card" v-if="task">
     <div class="card-header">
-        Create task
+        Edit task
     </div>
 
     <div class="card-body">
@@ -51,13 +51,13 @@
         data ()
         {
             return {
-                task: {
-                    title: '',
-                    description: '',
-                    starts_at: '',
-                    ends_at: '',
-                }
+                task: undefined,
             }
+        },
+
+        created ()
+        {
+            this.fetch()
         },
 
         computed: {
@@ -84,15 +84,12 @@
 
         methods: {
 
-            store ()
+            fetch ()
             {
-                axios.post('/data/projects/'+this.$route.params.project_id+'/tasks',
-                    this.task
-                )
+                axios.get('/data/projects/'+this.$route.params.project_id+'/tasks/'+this.$route.params.task_id+'/edit')
                 .then((response) => {
                     console.log(response);
-
-                    this.$router.push({ name: 'projects.view', params: { project_id: this.$route.params.project_id }})
+                    this.task = response.data
                 })
                 .catch((error) => {
                     console.log(error);

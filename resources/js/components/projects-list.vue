@@ -10,7 +10,7 @@
     <div class="card-body">
         <div class="row" v-for="project in projects">
             <div class="col">
-                <router-link :to="{ name: 'projects.view', params: { id: project.id }}">{{ project.title }}</router-link>
+                <router-link :to="{ name: 'projects.view', params: { project_id: project.id }}">{{ project.title }}</router-link>
             </div>
         </div>
     </div>

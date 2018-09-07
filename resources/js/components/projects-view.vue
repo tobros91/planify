@@ -41,7 +41,7 @@
 
             fetch ()
             {
-                axios.get('/data/projects/'+this.$route.params.id)
+                axios.get('/data/projects/'+this.$route.params.project_id)
                 .then((response) => {
                     console.log(response);
                     this.project = response.data.project
