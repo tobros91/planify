@@ -2,7 +2,7 @@
 <div class="card">
     <div class="card-header">
         Projects
-        <div class="btn btn-primary float-right" @click="create()">
+        <div class="btn btn-primary btn-sm float-right" @click="create()">
             Create project
         </div>
     </div>

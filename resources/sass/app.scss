@@ -8,7 +8,55 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
-.navbar-laravel {
-  background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+@import "~@fortawesome/fontawesome-free/scss/fontawesome.scss";
+@import "~@fortawesome/fontawesome-free/scss/solid.scss";
+@import "~@fortawesome/fontawesome-free/scss/brands.scss";
+
+.row-tasks {
+
+    height: 20px;
+    font-size: 12px;
+
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+
+    @for $i from 1 through 7 {
+        $procentage: 14.285714 * $i;
+
+        .task-width-#{$i} {
+            flex: 0 0 $procentage + 0%;
+            max-width: $procentage + 0%;
+        }
+        .task-offset-#{$i} {
+            margin-left: $procentage + 0%;
+        }
+    }
+}
+@for $i from 1 through 7 {
+    $procentage: 14.285714 * $i;
+    .row-tasks.task-offset-#{$i} {
+        margin-left: $procentage + 0%;
+    }
+}
+
+.date {
+    height: 140px;
+    border-top: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+    color: #ccc;
+    padding: 0px 0px 0px 0px;
+    font-size:  12px;
+}
+.date.active {
+    border-color: #9f9f9f;
+    color: #9f9f9f;
+}
+.date:last-child {
+    border-right: 1px solid #ccc;
+}
+.weekDaysRow:last-child {
+    .date {
+        border-bottom: 1px solid #ccc;
+    }
 }

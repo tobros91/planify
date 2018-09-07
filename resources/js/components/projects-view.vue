@@ -16,9 +16,7 @@
         </div>
 
         <div class="card-body">
-            <div class="row" v-for="task in project.tasks">
-                <div class="col">{{ task.title }}</div>
-            </div>
+            <calendar :tasks="project.tasks" />
         </div>
     </div>
 </div>
@@ -26,7 +24,13 @@
 
 <script>
 
+    import calendar from './tasks-calendar'
+
     export default {
+
+        components: {
+            calendar,
+        },
 
         data ()
         {
