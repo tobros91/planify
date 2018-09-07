@@ -44,11 +44,10 @@
 
                         <div class="row row-tasks no-gutters"
                              :class="task.classOffset"
-                             style="background-color: #8c8c8c;"
                              :style="{ top: tasksTop(task, chunk[0].date)+'px', 'z-index': (100+index) }"
                              v-for="(task, index) in chunk[0].tasks">
 
-                            <div :class="[task.classWidth, task.classBorderLeft, task.classBorderRight]">
+                            <div :class="[task.classWidth, task.classBorderLeft, task.classBorderRight]" style="background-color: #8c8c8c;">
                                 <span class="d-inline-block w-100 text-truncate">
                                     <b>{{ task.title }}</b>
                                 </span>
@@ -134,8 +133,8 @@
 
                         _.forEach(this.tasksInRange(date, 'isoWeek'), function(task, index) {
 
-                            var taskStartInWeek = (moment(task.starts_at).isSameOrAfter(moment(date), 'day') ? moment(task.starts_at).weekday() : 1)
-                            var taskEndInWeek = (moment(task.ends_at).isSameOrBefore(endOfWeek, 'day') ? moment(task.ends_at).weekday() : 7)
+                            var taskStartInWeek = (moment(task.starts_at).isSameOrAfter(moment(date), 'day') ? moment(task.starts_at).isoWeekday() : 1)
+                            var taskEndInWeek = (moment(task.ends_at).isSameOrBefore(endOfWeek, 'day') ? moment(task.ends_at).isoWeekday() : 7)
 
                             task.taskStartInWeek = taskStartInWeek
                             task.taskEndInWeek = taskEndInWeek
@@ -199,7 +198,7 @@
                         )
                 })
 
-                console.log('tasks in range')
+                console.log('tasks in range: '+start.toISOString()+' - '+end.toISOString())
                 console.log(tasks)
 
                 return JSON.parse(JSON.stringify(tasks))

@@ -20,13 +20,13 @@
         <div class="form-group row">
             <label for="description" class="col-sm-2 col-form-label">Starts at</label>
             <div class="col-sm-10">
-                <datepicker v-model="task.starts_at" :disabledDates="disabledDatesStartsAt" format="yyyy-MM-dd" :bootstrap-styling="true"></datepicker>
+                <datepicker v-model="task.starts_at" :disabledDates="disabledDatesStartsAt" format="yyyy-MM-dd" :monday-first="true" :bootstrap-styling="true"></datepicker>
             </div>
         </div>
         <div class="form-group row">
             <label for="description" class="col-sm-2 col-form-label">Ends at</label>
             <div class="col-sm-10">
-                <datepicker v-model="task.ends_at" :disabledDates="disabledDatesEndsAt" format="yyyy-MM-dd" :bootstrap-styling="true"></datepicker>
+                <datepicker v-model="task.ends_at" :disabledDates="disabledDatesEndsAt" format="yyyy-MM-dd" :monday-first="true" :bootstrap-styling="true"></datepicker>
             </div>
         </div>
         <div class="form-group row">
