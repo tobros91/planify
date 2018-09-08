@@ -36,6 +36,7 @@ export default {
                 axios.get('/data/projects/'+project_id)
                 .then((response) => {
                     console.log(response);
+                    commit('set', response.data.project)
                     resolve(response.data.project)
                 })
                 .catch((error) =>{

@@ -18,7 +18,10 @@ Route::get('/', function () {
 
 Auth::routes();
 
+
 Route::resource('data/projects', 'ProjectsController');
+Route::resource('data/projects.teams', 'ProjectsTeamsController');
 Route::resource('data/projects.tasks', 'TasksController');
+
 
 Route::get('{all}', 'HomeController@router')->where(['all' => '.*']);

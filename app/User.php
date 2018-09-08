@@ -39,4 +39,9 @@ class User extends Authenticatable
     {
         return $this->morphedByMany('App\Task', 'teamable', 'teams');
     }
+
+    public function scopeFindByEmail($query, $email)
+    {
+        return $query->where('email', $email)->first();
+    }
 }

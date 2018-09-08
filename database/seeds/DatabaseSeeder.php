@@ -18,6 +18,12 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('testar')
         ]);
 
+        factory(App\User::class)->create([
+            'name' => 'Tobias Rosengren',
+            'email' => 'tobias@tobiasrosengren.se',
+            'password' => bcrypt('testar')
+        ]);
+
         $this->call(ProjectsTableSeeder::class);
     }
 }

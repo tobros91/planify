@@ -20,6 +20,8 @@ class CreateTeamsTable extends Migration
 
             $table->primary(['user_id', 'teamable_id', 'teamable_type']);
 
+            $table->timestamp('accepted_at')->nullable();
+            $table->timestamp('rejected_at')->nullable();
             $table->timestamps();
         });
     }

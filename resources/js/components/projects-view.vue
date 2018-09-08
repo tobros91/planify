@@ -57,9 +57,6 @@
         created ()
         {
             this.$store.dispatch('project/get', this.$route.params.project_id)
-            .then((project) => {
-                this.$store.commit('project/set', project)
-            })
         },
 
         methods: {
