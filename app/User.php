@@ -29,10 +29,9 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-
     public function projects()
     {
-        return $this->hasMany('App\Project');
+        return $this->morphedByMany('App\Project', 'teamable', 'teams')->withPivot('accepted_at', 'rejected_at');
     }
 
     public function tasks()

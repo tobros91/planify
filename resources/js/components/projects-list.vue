@@ -1,19 +1,24 @@
 <template>
-<div class="card">
-    <div class="card-header">
+<div class="container">
+
+    <h1 class="mt-3">
         Projects
+
         <div class="btn btn-primary btn-sm float-right" @click="create()">
             Create project
         </div>
-    </div>
 
-    <div class="card-body">
-        <div class="row" v-for="project in projects">
-            <div class="col">
-                <router-link :to="{ name: 'projects.view', params: { project_id: project.id }}">{{ project.title }}</router-link>
+    </h1>
+
+    <ul class="list-group mt-3">
+        <li class="list-group-item" v-for="project in projects">
+            <div class="row">
+                <div class="col">
+                    <router-link :to="{ name: 'projects.view', params: { project_id: project.id }}">{{ project.title }}</router-link>
+                </div>
             </div>
-        </div>
-    </div>
+        </li>
+    </ul>
 
 </div>
 </template>

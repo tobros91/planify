@@ -4,7 +4,10 @@ namespace App;
 
 use App\Task;
 use App\User;
+use App\Notifications\InvitedToProject;
 use Illuminate\Database\Eloquent\Model;
+
+use Log;
 
 class Project extends Model
 {
@@ -25,7 +28,9 @@ class Project extends Model
 
     public function invite(User $user)
     {
-        return $this->team()->attach($user->id);
+        $this->team()->attach($user->id);
+
+        $user->notify(new InvitedToProject($this));
     }
 
     public function kick(User $user)

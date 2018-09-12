@@ -18,8 +18,10 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::get('/data/notifications', 'NotificationController@index');
 
 Route::resource('data/projects', 'ProjectsController');
+Route::post('data/projects/{project}/teams/respond', 'ProjectsTeamsController@respond');
 Route::resource('data/projects.teams', 'ProjectsTeamsController');
 Route::resource('data/projects.tasks', 'TasksController');
 
