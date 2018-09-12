@@ -1,7 +1,7 @@
 <template>
 <div class="container">
 
-    <h1 class="mt-3">
+    <h1>
         Projects
 
         <div class="btn btn-primary btn-sm float-right" @click="create()">

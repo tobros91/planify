@@ -9,6 +9,8 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
+Vue.component('notificationsBadge', require('./components/notifications-badge'));
+
 import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
@@ -33,14 +35,19 @@ const routes = [
                 component: require('./components/projects-view-overview')
             },
             {
-                path: 'team',
-                name: 'projects.view.team',
-                component: require('./components/projects-view-team')
+                path: 'tasks',
+                name: 'projects.view.tasks',
+                component: require('./components/projects-view-tasks')
             },
             {
                 path: 'calendar',
                 name: 'projects.view.calendar',
                 component: require('./components/projects-view-calendar')
+            },
+            {
+                path: 'team',
+                name: 'projects.view.team',
+                component: require('./components/projects-view-team')
             },
         ]
     },
@@ -53,6 +60,11 @@ const routes = [
         path: '/projects/:project_id/tasks/:task_id/edit',
         name: 'tasks.edit',
         component: require('./components/tasks-edit')
+    },
+    {
+        path: '/notifications',
+        name: 'notifications.list',
+        component: require('./components/notifications-list')
     },
 ]
 

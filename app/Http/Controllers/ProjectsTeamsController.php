@@ -29,8 +29,6 @@ class ProjectsTeamsController extends Controller
         $request->user()->projects()->updateExistingPivot($project->id, [
             $column => now()
         ]);
-
-        $request->user()->notifications()->update(['action_at' => now()]);
     }
 
 

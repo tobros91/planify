@@ -37,10 +37,14 @@ class ProjectsController extends Controller
         $project = Project::with(['tasks.team', 'team.tasks' => function ($query) use ($project_id) {
             $query->where('project_id', $project_id);
         }])
+        ->whereTeamHasUser()
         ->findOrFail($project_id);
 
+        $user = $project->team()->where('user_id', auth()->user()->id)->first();
+
         return [
-            'project' => $project
+            'project' => $project,
+            'user' => $user,
         ];
     }
 

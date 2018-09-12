@@ -1,7 +1,7 @@
 <template>
-<div v-if="project">
+<div v-if="hasLoaded">
 
-    <div class="container mt-3">
+    <div class="container">
         <h1>{{ project.title }}</h1>
     </div>
 
@@ -34,9 +34,23 @@
         </div>
     </div>
 
-    <transition name="fade" mode="out-in">
-        <router-view></router-view>
-    </transition>
+    <div v-if="user.pivot.accepted_at">
+        <transition name="fade" mode="out-in">
+            <router-view></router-view>
+        </transition>
+    </div>
+
+    <div class="container" v-if="!user.pivot.accepted_at">
+        <div class="row">
+            <div class="col">
+
+                <h3>Please respond to the invitation.</h3>
+
+                <button class="btn btn-success" @click="respond('accept')">Accept</button>
+                <button class="btn btn-danger" @click="respond('deny')">Deny</button>
+            </div>
+        </div>
+    </div>
 
 </div>
 </template>
@@ -50,6 +64,14 @@
             project ()
             {
                 return this.$store.state.project.project
+            },
+            user ()
+            {
+                return this.$store.state.project.user
+            },
+            hasLoaded ()
+            {
+                return Object.keys(this.project).length > 0 && Object.keys(this.user).length > 0
             }
 
         },
@@ -61,15 +83,22 @@
 
         methods: {
 
-            fetch ()
+            respond (action)
             {
-                axios.get('/data/projects/'+this.$route.params.project_id)
-                .then((response) => {
-                    console.log(response);
-                    this.project = response.data.project
+                axios.post('/data/projects/'+this.$route.params.project_id+'/teams/respond', {
+                    action: action,
                 })
-                .catch((error) =>{
-                    console.log(error);
+                .then((response) => {
+                    console.log(response.data);
+
+                    if (action == 'accept') {
+                        this.$router.push({ name: 'projects.view', params: { project_id: this.$route.params.project_id }})
+                        return
+                    }
+
+                })
+                .catch((error) => {
+                    console.log(error.data);
                 });
             }
 

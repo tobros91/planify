@@ -3,13 +3,18 @@ export default {
     namespaced: true,
 
     state: {
-        project: {}
+        project: {},
+        user: {}
     },
 
     mutations: {
-        set (state, project)
+        setProject (state, project)
         {
             state.project = project
+        },
+        setUser (state, user)
+        {
+            state.user = user
         }
     },
 
@@ -35,8 +40,10 @@ export default {
             return new Promise((resolve, reject) => {
                 axios.get('/data/projects/'+project_id)
                 .then((response) => {
-                    console.log(response);
-                    commit('set', response.data.project)
+                    console.log('get project')
+                    console.log(response.data);
+                    commit('setProject', response.data.project)
+                    commit('setUser', response.data.user)
                     resolve(response.data.project)
                 })
                 .catch((error) =>{

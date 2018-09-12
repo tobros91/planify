@@ -16,6 +16,8 @@ class ProjectsTableSeeder extends Seeder
             'user_id' => 1,
         ])->each(function ($project) {
 
+            $project->team()->attach(1);
+
             $user1 = $project->team()->save(factory(App\User::class)->make());
             $user2 = $project->team()->save(factory(App\User::class)->make());
             $user3 = $project->team()->save(factory(App\User::class)->make());

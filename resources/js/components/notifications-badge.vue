@@ -1,7 +1,9 @@
 <template>
-<span class="badge badge-light" @click="show()">
-    {{ num_unread }}
-</span>
+<form class="form-inline">
+    <button type="button" class="btn btn-primary" :class="{ 'btn-info': num_unread > 0 }" @click="show()">
+        <i class="fas fa-bell"></i>
+    </button>
+</form>
 </template>
 
 <script>
