@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\File;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Storage;
+
+use Log;
 
 class SettingsController extends Controller
 {
@@ -38,5 +42,32 @@ class SettingsController extends Controller
         ]);
 
         $user->update($request->only('name', 'email', 'visibility'));
+    }
+
+
+    public function upload(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|image'
+        ]);
+
+        $user = auth()->user();
+
+        $upload = $request->file('file');
+        $filename = $upload->getClientOriginalName();
+        $extension = strtolower($upload->getClientOriginalExtension());
+
+        $path = $upload->store('avatars');
+
+        $file = $user->image()->create([
+            'user_id' => $user->id,
+            'filename' => $filename,
+            'extension' => $extension,
+            'path' => $path
+        ]);
+
+        $file->generateThumbs();
+
+        return $file;
     }
 }

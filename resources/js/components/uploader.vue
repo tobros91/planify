@@ -8,12 +8,6 @@
 
     export default {
 
-        props: {
-
-
-
-        },
-
         data ()
         {
             return {
@@ -37,7 +31,7 @@
                 formData.append('file', event.target.files[0], event.target.files[0].name)
 
                 axios.post(
-                    '/upload',
+                    '/data/settings/upload',
                     formData,
                     {
                         onUploadProgress: (progressEvent) => {

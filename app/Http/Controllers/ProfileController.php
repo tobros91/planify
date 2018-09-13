@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+
+use Image;
 
 class ProfileController extends Controller
 {
@@ -30,5 +33,22 @@ class ProfileController extends Controller
             'user' => $user,
             'jointProjects' => $jointProjects,
         ];
+    }
+
+
+    public function avatar(Request $request, $user_id)
+    {
+        $user = User::findOrFail($user_id);
+
+        $full_path = Storage::get($user->image->path);
+        $image = Image::cache(function ($image) use ($full_path) {
+            $image->make($full_path)->resize(300, null, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+        });
+
+        return response()->streamDownload(function () use ($image) {
+            echo $image;
+        }, $user->image->filename);
     }
 }

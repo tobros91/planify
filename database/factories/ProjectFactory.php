@@ -9,3 +9,7 @@ $factory->define(App\Project::class, function (Faker $faker) {
         'user_id' => factory(App\User::class)->create()->id
     ];
 });
+
+$factory->afterCreating(App\Project::class, function ($project, $faker) {
+    $project->team()->attach($project->user_id, ['accepted_at' => now()]);
+});

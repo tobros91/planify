@@ -13,7 +13,8 @@ class Project extends Model
 {
     protected $fillable = [
         'title',
-        'description'
+        'description',
+        'user_id'
     ];
 
     public function tasks()

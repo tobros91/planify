@@ -28,7 +28,11 @@ class ProjectsController extends Controller
 
     public function store(Request $request)
     {
-        $project = $request->user()->projects()->create($request->only('title', 'description'));
+        $project = $request->user()->projects()->create([
+            'title'       => $request->input('title'),
+            'description' => $request->input('description'),
+            'user_id'     => $request->user()->id
+        ]);
         return $project;
     }
 

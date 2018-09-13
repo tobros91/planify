@@ -19,6 +19,10 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    protected $with = [
+        'image'
+    ];
+
     protected $appends = [
         'image_url'
     ];
@@ -35,6 +39,12 @@ class User extends Authenticatable
         return $this->morphedByMany('App\Task', 'teamable', 'teams');
     }
 
+    public function image()
+    {
+        return $this->morphOne('App\File', 'fileable');
+    }
+
+
     public function scopeFindByEmail($query, $email)
     {
         return $query->where('email', $email)->first();
@@ -42,7 +52,10 @@ class User extends Authenticatable
 
     public function getImageUrlAttribute()
     {
-        return '/svg/profile-fallback.svg';
+        if ($this->image === null) {
+            return '/svg/profile-fallback.svg';
+        }
+        return '/data/profile/'.$this->id.'/avatar';
     }
 
 
