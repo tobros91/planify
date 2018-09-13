@@ -1,7 +1,26 @@
 <template>
 <div class="container" v-if="user">
-    <h3>Profile</h3>
-    {{ user }}
+
+    <div class="card">
+        <div class="card-body">
+
+            <div class="row">
+                <div class="col-4">
+                    <div class="card">
+                        <img class="card-img-top" :src="user.image_url">
+                    </div>
+                </div>
+
+                <div class="col">
+                    <h5 class="card-title">{{ user.name }}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">{{ user.email }}</h6>
+                    <a href="#" class="card-link">Card link</a>
+                    <a href="#" class="card-link">Another link</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 </template>
 
@@ -13,6 +32,7 @@
         {
             return {
                 user: undefined,
+                jointProjects: [],
             }
         },
 
@@ -29,8 +49,9 @@
 
                 axios.get('/data/profile/'+user_id)
                 .then((response) => {
-                    console.log(response);
-                    this.user = response.data
+                    console.log(response.data);
+                    this.user = response.data.user
+                    this.jointProjects = response.data.jointProjects
                 })
                 .catch((error) => {
                     console.log(error);

@@ -19,6 +19,10 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    protected $appends = [
+        'image_url'
+    ];
+
     public function projects()
     {
         return $this->morphedByMany('App\Project', 'teamable', 'teams')
@@ -36,8 +40,13 @@ class User extends Authenticatable
         return $query->where('email', $email)->first();
     }
 
+    public function getImageUrlAttribute()
+    {
+        return '/svg/profile-fallback.svg';
+    }
 
-    public function sharedProjectsWith($user)
+
+    public function jointProjectsWith($user)
     {
         return $this->projects()->whereIn('id', $user->projects()->pluck('id'))->get();
     }

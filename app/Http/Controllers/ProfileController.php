@@ -10,19 +10,25 @@ class ProfileController extends Controller
     public function index($user_id = null)
     {
         if ($user_id === null && auth()->check()) {
-            $user_id = auth()->user()->id;
+            return [
+                'user' => auth()->user()
+            ];
         }
 
         $user = User::findOrFail($user_id);
+        $jointProjects = auth()->check() ? auth()->user()->jointProjectsWith($user) : [];
 
         if (($user->visibility === 'auth' || $user->visibility === 'team') && !auth()->check()) {
             return 'hidden';
         }
 
-        if ($user->visibility === 'team' && count($user->sharedProjectsWith(auth()->user())) === 0) {
+        if ($user->visibility === 'team' && count($jointProjects) === 0) {
             return 'only for team';
         }
 
-        return $user;
+        return [
+            'user' => $user,
+            'jointProjects' => $jointProjects,
+        ];
     }
 }
