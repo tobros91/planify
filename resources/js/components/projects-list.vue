@@ -18,6 +18,9 @@
                 </div>
             </div>
         </li>
+         <li class="list-group-item" v-if="projects.length === 0">
+            No projects
+        </li>
     </ul>
 
 </div>

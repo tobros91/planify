@@ -13,7 +13,6 @@ class NotificationController extends Controller
 
     public function index(Request $request)
     {
-        $request->user()->unreadNotifications->markAsRead();
         return $request->user()->notifications;
     }
 }

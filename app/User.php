@@ -11,27 +11,19 @@ class User extends Authenticatable
 {
     use Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'visibility', 'password',
     ];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
     protected $hidden = [
         'password', 'remember_token',
     ];
 
     public function projects()
     {
-        return $this->morphedByMany('App\Project', 'teamable', 'teams')->withPivot('accepted_at', 'rejected_at');
+        return $this->morphedByMany('App\Project', 'teamable', 'teams')
+                    ->withPivot('accepted_at', 'rejected_at')
+                    ->thatUserCanAccess();
     }
 
     public function tasks()
@@ -42,5 +34,11 @@ class User extends Authenticatable
     public function scopeFindByEmail($query, $email)
     {
         return $query->where('email', $email)->first();
+    }
+
+
+    public function sharedProjectsWith($user)
+    {
+        return $this->projects()->whereIn('id', $user->projects()->pluck('id'))->get();
     }
 }

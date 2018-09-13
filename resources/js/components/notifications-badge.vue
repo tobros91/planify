@@ -1,8 +1,8 @@
 <template>
 <form class="form-inline">
-    <button type="button" class="btn btn-primary" :class="{ 'btn-info': num_unread > 0 }" @click="show()">
-        <i class="fas fa-bell"></i>
-    </button>
+    <div class="btn btn-primary" style="color: #fff;" :class="{ 'btn-info': onNotificationsPage }" @click="show()">
+        <i class="fa-bell" :class="{ 'far': num_unread === 0, 'fas': num_unread > 0 }"></i>
+    </div>
 </form>
 </template>
 
@@ -22,6 +22,11 @@
                 return this.notifications.filter(notification => {
                     return !notification.read_at
                 }).length
+            },
+
+            onNotificationsPage ()
+            {
+                return this.$route.name == 'notifications.list' ? true : false
             }
 
         },

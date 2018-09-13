@@ -1,38 +1,35 @@
 <template>
-<div class="card" v-if="task">
-    <div class="card-header">
-        Edit task
-    </div>
+<div class="container" v-if="task">
 
-    <div class="card-body">
-        <div class="form-group row">
-            <label for="title" class="col-sm-2 col-form-label">Title</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" id="title" placeholder="Title" v-model="task.title">
-            </div>
+    <h3>Edit task</h3>
+
+    <div class="form-group row">
+        <label for="title" class="col-sm-2 col-form-label">Title</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="title" placeholder="Title" v-model="task.title">
         </div>
-        <div class="form-group row">
-            <label for="description" class="col-sm-2 col-form-label">Description</label>
-            <div class="col-sm-10">
-                <textarea class="form-control" id="description" placeholder="Description" v-model="task.description"></textarea>
-            </div>
+    </div>
+    <div class="form-group row">
+        <label for="description" class="col-sm-2 col-form-label">Description</label>
+        <div class="col-sm-10">
+            <textarea class="form-control" id="description" placeholder="Description" v-model="task.description"></textarea>
         </div>
-        <div class="form-group row">
-            <label for="description" class="col-sm-2 col-form-label">Starts at</label>
-            <div class="col-sm-10">
-                <datepicker v-model="task.starts_at" :disabledDates="disabledDatesStartsAt" format="yyyy-MM-dd" :monday-first="true" :bootstrap-styling="true"></datepicker>
-            </div>
+    </div>
+    <div class="form-group row">
+        <label for="description" class="col-sm-2 col-form-label">Starts at</label>
+        <div class="col-sm-10">
+            <datepicker v-model="task.starts_at" :disabledDates="disabledDatesStartsAt" format="yyyy-MM-dd" :monday-first="true" :bootstrap-styling="true"></datepicker>
         </div>
-        <div class="form-group row">
-            <label for="description" class="col-sm-2 col-form-label">Ends at</label>
-            <div class="col-sm-10">
-                <datepicker v-model="task.ends_at" :disabledDates="disabledDatesEndsAt" format="yyyy-MM-dd" :monday-first="true" :bootstrap-styling="true"></datepicker>
-            </div>
+    </div>
+    <div class="form-group row">
+        <label for="description" class="col-sm-2 col-form-label">Ends at</label>
+        <div class="col-sm-10">
+            <datepicker v-model="task.ends_at" :disabledDates="disabledDatesEndsAt" format="yyyy-MM-dd" :monday-first="true" :bootstrap-styling="true"></datepicker>
         </div>
-        <div class="form-group row">
-            <div class="col-sm-10">
-                <button type="submit" class="btn btn-primary" @click="store()">Store</button>
-            </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-sm-10">
+            <button type="submit" class="btn btn-primary" @click="store()">Store</button>
         </div>
     </div>
 </div>

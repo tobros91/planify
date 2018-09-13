@@ -18,6 +18,9 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::get('/data/settings', 'SettingsController@edit');
+Route::post('/data/settings', 'SettingsController@update');
+Route::get('/data/profile/{user?}', 'ProfileController@index');
 Route::get('/data/notifications', 'NotificationController@index');
 
 Route::resource('data/projects', 'ProjectsController');

@@ -18,16 +18,19 @@ const routes = [
     {
         path: '/projects',
         name: 'projects.list',
-        component: require('./components/projects-list')
+        component: require('./components/projects-list'),
+        meta: { requiresAuth: true }
     },
     {
         path: '/projects/create',
         name: 'projects.create',
-        component: require('./components/projects-create')
+        component: require('./components/projects-create'),
+        meta: { requiresAuth: true }
     },
     {
         path: '/projects/:project_id',
         component: require('./components/projects-view'),
+        meta: { requiresAuth: true },
         children: [
             {
                 path: '',
@@ -38,6 +41,21 @@ const routes = [
                 path: 'tasks',
                 name: 'projects.view.tasks',
                 component: require('./components/projects-view-tasks')
+            },
+            {
+                path: 'tasks/:task_id',
+                name: 'tasks-view',
+                component: require('./components/tasks-view')
+            },
+            {
+                path: 'tasks/create',
+                name: 'tasks.create',
+                component: require('./components/tasks-create')
+            },
+            {
+                path: 'tasks/:task_id/edit',
+                name: 'tasks.edit',
+                component: require('./components/tasks-edit')
             },
             {
                 path: 'calendar',
@@ -52,25 +70,39 @@ const routes = [
         ]
     },
     {
-        path: '/projects/:project_id/tasks/create',
-        name: 'tasks.create',
-        component: require('./components/tasks-create')
-    },
-    {
-        path: '/projects/:project_id/tasks/:task_id/edit',
-        name: 'tasks.edit',
-        component: require('./components/tasks-edit')
-    },
-    {
         path: '/notifications',
         name: 'notifications.list',
-        component: require('./components/notifications-list')
+        component: require('./components/notifications-list'),
+        meta: { requiresAuth: true }
+    },
+    {
+        path: '/profile/:user_id?',
+        name: 'profile',
+        component: require('./components/profile')
+    },
+    {
+        path: '/settings',
+        name: 'settings',
+        component: require('./components/settings'),
+        meta: { requiresAuth: true }
     },
 ]
 
 const router = new VueRouter({
     routes,
     mode: 'history',
+})
+
+router.beforeEach((to, from, next) => {
+    if (to.matched.some(record => record.meta.requiresAuth)) {
+        if (!isAuth) {
+            window.location.href = '/login'
+        } else {
+            next()
+        }
+    } else {
+        next()
+    }
 })
 
 import store from './store'

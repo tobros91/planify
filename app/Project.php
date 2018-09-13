@@ -26,7 +26,7 @@ class Project extends Model
         return $this->morphToMany(User::class, 'teamable', 'teams')->withPivot('accepted_at', 'rejected_at');
     }
 
-    public function scopeWhereTeamHasUser($query, $user = null)
+    public function scopeThatUserCanAccess($query, $user = null)
     {
         if (!$user) {
             $user = auth()->user();

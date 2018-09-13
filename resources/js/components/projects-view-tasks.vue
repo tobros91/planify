@@ -25,6 +25,11 @@
                 <div class="col">
                     <span v-for="user in task.team">{{ user.name }}</span>
                 </div>
+                <div class="col">
+                    <div class="btn btn-primary btn-sm float-right" @click="view(task.id)">
+                        View
+                    </div>
+                </div>
             </div>
         </li>
     </ul>
@@ -59,6 +64,15 @@
             }
 
         },
+
+        methods: {
+
+            view (task_id)
+            {
+                this.$router.push({ name: 'tasks-view', params: { task_id: task_id }})
+            }
+
+        }
 
     }
 

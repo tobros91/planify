@@ -4,12 +4,12 @@
     <h1>Notifications</h1>
 
     <ul class="list-group mt-3">
+
         <li class="list-group-item" v-for="notification in notifications">
-            <div class="row">
-                <div class="col">
-                    <h3>Invited to project {{ notification.data.project.title }} by user {{ notification.data.project.user_id }}</h3>
-                </div>
-            </div>
+            <component :is="typeToComponent[notification.type]" :key="notification.id" :notification="notification"></component>
+        </li>
+        <li class="list-group-item" v-if="notifications.length === 0">
+            No notifications
         </li>
     </ul>
 </div>
@@ -17,7 +17,24 @@
 
 <script>
 
+    import invitedToProject from './notifications/invited-to-project'
+
     export default {
+
+        components: {
+
+            invitedToProject,
+
+        },
+
+        data ()
+        {
+            return {
+                typeToComponent: {
+                    'App\\Notifications\\InvitedToProject': 'invited-to-project'
+                }
+            }
+        },
 
         computed: {
 

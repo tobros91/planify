@@ -15,17 +15,17 @@
                         </router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link :to="{ name: 'projects.view.tasks' }" class="nav-link" exact-active-class="active">
+                        <router-link :to="{ name: 'projects.view.tasks' }" class="nav-link" active-class="active">
                             Tasks
                         </router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link :to="{ name: 'projects.view.calendar' }" class="nav-link" exact-active-class="active">
+                        <router-link :to="{ name: 'projects.view.calendar' }" class="nav-link" active-class="active">
                             Calendar
                         </router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link :to="{ name: 'projects.view.team' }" class="nav-link" exact-active-class="active">
+                        <router-link :to="{ name: 'projects.view.team' }" class="nav-link" active-class="active">
                             Team
                         </router-link>
                     </li>
