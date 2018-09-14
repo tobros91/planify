@@ -6,7 +6,16 @@
     <ul class="list-group mt-3">
 
         <li class="list-group-item" v-for="notification in notifications">
-            <component :is="typeToComponent[notification.type]" :key="notification.id" :notification="notification"></component>
+            <div class="row">
+                <div class="col">
+                    <component :is="typeToComponent[notification.type]" :key="notification.id" :notification="notification"></component>
+                </div>
+                <div class="col-1">
+                    <div class="btn btn-primary float-right" style="color: #fff;" title="Mark as read" @click="mark(notification)">
+                        <i class="fa-bell" :class="{ 'far': notification.read_at, 'fas': !notification.read_at }"></i>
+                    </div>
+                </div>
+            </div>
         </li>
         <li class="list-group-item" v-if="notifications.length === 0">
             No notifications
@@ -44,6 +53,27 @@
             }
 
         },
+
+        methods: {
+
+            mark (notification)
+            {
+                if (notification.read_at) {
+                    return
+                }
+
+                axios.put('/data/notifications/'+notification.id+'/markAsRead')
+                .then((response) => {
+                    console.log('mark notification response')
+                    console.log(response.data);
+                    this.$store.dispatch('notifications/get')
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+            }
+
+        }
 
     }
 

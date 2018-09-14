@@ -22,9 +22,12 @@ Auth::routes();
 Route::get('/data/settings', 'SettingsController@edit');
 Route::post('/data/settings', 'SettingsController@update');
 Route::post('/data/settings/upload', 'SettingsController@upload');
+
 Route::get('/data/profile/{user?}', 'ProfileController@index');
 Route::get('/data/profile/{user}/avatar', 'ProfileController@avatar');
+
 Route::get('/data/notifications', 'NotificationController@index');
+Route::put('/data/notifications/{notification}/markAsRead', 'NotificationController@markAsRead');
 
 Route::resource('data/projects', 'ProjectsController');
 Route::post('data/projects/{project}/teams/respond', 'ProjectsTeamsController@respond');

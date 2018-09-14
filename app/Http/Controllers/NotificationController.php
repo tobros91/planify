@@ -15,4 +15,9 @@ class NotificationController extends Controller
     {
         return $request->user()->notifications;
     }
+
+    public function markAsRead(Request $request, $notification_id)
+    {
+        return $request->user()->notifications()->findOrFail($notification_id)->markAsRead();
+    }
 }

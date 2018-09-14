@@ -78,10 +78,15 @@
 
         created ()
         {
-            this.$store.dispatch('project/get', this.$route.params.project_id)
+            this.fetch()
         },
 
         methods: {
+
+            fetch ()
+            {
+                this.$store.dispatch('project/get', this.$route.params.project_id)
+            },
 
             respond (action)
             {
@@ -92,9 +97,13 @@
                     console.log(response.data);
 
                     if (action == 'accept') {
-                        this.$router.push({ name: 'projects.view', params: { project_id: this.$route.params.project_id }})
+                        this.fetch()
+                        bus.$emit('flash', 'You are now a member of '+this.project.title)
                         return
                     }
+
+                    this.$router.push({ name: 'projects.list' })
+                    bus.$emit('flash', 'You rejected the invitation')
 
                 })
                 .catch((error) => {
