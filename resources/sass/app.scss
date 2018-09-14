@@ -77,6 +77,16 @@ body {
     border-radius: 3px;
 }
 
+.list-group-item {
+
+    .assignee {
+        max-width: 30px;
+        max-heigt: 30px;
+        margin-right: 5px;
+    }
+
+}
+
 #messageBar
 {
     position:fixed;

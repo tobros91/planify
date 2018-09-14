@@ -6,7 +6,7 @@
         <div class="card-body">
 
             <div class="row">
-                <div class="col-4">
+                <div class="col-3">
                     <div class="card">
                         <uploader />
                         <img class="card-img-top" :src="user.image_url">
@@ -15,30 +15,39 @@
 
                 <div class="col">
 
-                    <div class="form-group row">
-                        <label for="name" class="col-sm-2 col-form-label">Name</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="name" placeholder="Name" v-model="user.name">
-                        </div>
-                    </div>
+                    <input-text
+                        type="text"
+                        name="name"
+                        label="Name"
+                        v-model="user.name"
+                        :error="errors.name"
+                    />
 
-                    <div class="form-group row">
-                        <label for="email" class="col-sm-2 col-form-label">E-mail</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="email" placeholder="E-mail" v-model="user.email">
-                        </div>
-                    </div>
+                    <input-text
+                        type="email"
+                        name="email"
+                        label="E-mail"
+                        v-model="user.email"
+                        :error="errors.email"
+                    />
 
-                    <div class="form-group row">
-                        <label for="visibility" class="col-sm-2 col-form-label">Profile visibility</label>
-                        <div class="col-sm-10">
-                            <select class="form-control" v-model="user.visibility">
-                                <option value="public">Public</option>
-                                <option value="auth">Auth</option>
-                                <option value="team">Team</option>
-                            </select>
-                        </div>
-                    </div>
+                    <input-select
+                        name="visibility"
+                        label="Profile visibility"
+                        v-model="user.visibility"
+                        :error="errors.visibility"
+                        :options="[
+                            {
+                                value: 'public', text: 'Public'
+                            },
+                            {
+                                value: 'auth', text: 'Auth'
+                            },
+                            {
+                                value: 'team', text: 'Team'
+                            },
+                        ]"
+                    />
 
                 </div>
             </div>
@@ -57,19 +66,22 @@
 <script>
 
     import uploader from './uploader'
+    import inputText from './form/input-text'
+    import inputSelect from './form/input-select'
 
     export default {
 
         components: {
-
-            uploader
-
+            uploader,
+            inputText,
+            inputSelect
         },
 
         data ()
         {
             return {
                 user: undefined,
+                errors: {}
             }
         },
 
@@ -102,12 +114,13 @@
                 .then((response) => {
                     console.log('update settings')
                     console.log(response.data);
+                    bus.$emit('flash', 'Your profile has been updated.')
                 })
                 .catch((error) => {
-                    console.log(error);
+                    console.log(error.response);
 
-                    if (error.response) {
-                        console.log(error.response)
+                    if (error.response.status === 422) {
+                        this.errors = error.response.data.errors
                     }
                 });
             },

@@ -15,16 +15,6 @@ class TasksController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
-    {
-        //
-    }
-
-    public function create()
-    {
-        //
-    }
-
     public function store(StoreTask $request, Project $project)
     {
         $task = $project->tasks()->create([
@@ -34,6 +24,7 @@ class TasksController extends Controller
             'starts_at'   => Carbon::parse($request->input('starts_at'))->toDateTimeString(),
             'ends_at'     => Carbon::parse($request->input('ends_at'))->toDateTimeString(),
         ]);
+
         return $task;
     }
 

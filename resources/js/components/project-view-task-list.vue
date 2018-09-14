@@ -19,16 +19,25 @@
     </div>
 
     <ul class="list-group mt-3">
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col">
+
+                </div>
+                <div class="col-3">
+                    Assignees
+                </div>
+            </div>
+        </li>
         <li class="list-group-item" v-for="task in tasks">
             <div class="row">
-                <div class="col">{{ task.title }}</div>
                 <div class="col">
-                    <span v-for="user in task.team">{{ user.name }}</span>
+                    <router-link :to="{ name: 'project-view-task-view', params: { task_id: task.id }}" class="h4">{{ task.title }}</router-link>
                 </div>
-                <div class="col">
-                    <div class="btn btn-primary btn-sm float-right" @click="view(task.id)">
-                        View
-                    </div>
+                <div class="col-3">
+                    <span v-for="user in task.team">
+                        <img class="img-fluid avatar assignee" :src="user.image_url" :title="user.name">
+                    </span>
                 </div>
             </div>
         </li>
@@ -66,6 +75,11 @@
         },
 
         methods: {
+
+            create ()
+            {
+                this.$router.push({ name: 'project-view-task-create' })
+            },
 
             view (task_id)
             {

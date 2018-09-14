@@ -27,14 +27,14 @@ export default [
                 component: require('./components/project-view-task-list')
             },
             {
-                path: 'tasks/:task_id',
-                name: 'project-view-task-view',
-                component: require('./components/project-view-task-view')
-            },
-            {
                 path: 'tasks/create',
                 name: 'project-view-task-create',
                 component: require('./components/project-view-task-create')
+            },
+            {
+                path: 'tasks/:task_id',
+                name: 'project-view-task-view',
+                component: require('./components/project-view-task-view')
             },
             {
                 path: 'tasks/:task_id/edit',

@@ -21,18 +21,21 @@ class ProjectsController extends Controller
         ];
     }
 
-    public function create()
-    {
-        //
-    }
-
     public function store(Request $request)
     {
-        $project = $request->user()->projects()->create([
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+        ]);
+
+        $project = Project::create([
             'title'       => $request->input('title'),
             'description' => $request->input('description'),
             'user_id'     => $request->user()->id
         ]);
+
+        $project->team()->attach($project->user_id, ['accepted_at' => now()]);
+
         return $project;
     }
 
