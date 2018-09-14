@@ -69,7 +69,7 @@
 
             view (task_id)
             {
-                this.$router.push({ name: 'tasks-view', params: { task_id: task_id }})
+                this.$router.push({ name: 'project-view-task-view', params: { task_id: task_id }})
             }
 
         }

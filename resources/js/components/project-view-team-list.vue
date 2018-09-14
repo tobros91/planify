@@ -3,7 +3,7 @@
 
     <div class="row">
         <div class="col">
-            Team
+             <input type="text" class="form-control" placeholder="Search team members" v-model="filter.text">
         </div>
         <div class="col">
             <div class="row">
@@ -61,6 +61,9 @@
             return {
                 email: '',
                 error: '',
+                filter: {
+                    text: '',
+                }
             }
         },
 

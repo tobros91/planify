@@ -1,6 +1,6 @@
 <template>
 <form class="form-inline">
-    <div class="btn btn-primary" style="color: #fff;" :class="{ 'btn-info': onNotificationsPage }" @click="show()">
+    <div class="btn btn-primary" style="color: #fff;" :title="num_unread+' unread notifications'" :class="{ 'btn-info': onNotificationsPage }" @click="show()">
         <i class="fa-bell" :class="{ 'far': num_unread === 0, 'fas': num_unread > 0 }"></i>
     </div>
 </form>
@@ -40,7 +40,7 @@
 
             show ()
             {
-                this.$router.push({ name: 'notifications.list' })
+                this.$router.push({ name: 'notification-list' })
             }
 
         }

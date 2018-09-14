@@ -3,9 +3,11 @@
     <div class="row">
         <div class="col">
             <div class="col">
-                <i class="fas fa-chevron-left" @click="previousMonth()"></i>
-                <i class="fas fa-chevron-right" @click="nextMonth()"></i>
-                {{ periodMonth }}
+                <h3>
+                    <i class="fas fa-chevron-left" style="cursor: pointer;" @click="previousMonth()"></i>
+                    <i class="fas fa-chevron-right" style="cursor: pointer;" @click="nextMonth()"></i>
+                    {{ periodMonth }}
+                </h3>
             </div>
         </div>
         <div class="col">
@@ -173,12 +175,12 @@
 
             create ()
             {
-                this.$router.push({ name: 'tasks.create', params: { project_id: this.$route.params.project_id }})
+                this.$router.push({ name: 'project-view-task-create', params: { project_id: this.$route.params.project_id }})
             },
 
             edit (task_id)
             {
-                this.$router.push({ name: 'tasks.edit', params: { project_id: this.$route.params.project_id, task_id: task_id }})
+                this.$router.push({ name: 'project-view-task-edit', params: { project_id: this.$route.params.project_id, task_id: task_id }})
             },
 
             previousMonth ()

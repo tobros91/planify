@@ -10,22 +10,22 @@
             <div class="container">
                 <ul class="nav nav-tabs border-bottom-0">
                     <li class="nav-item">
-                        <router-link :to="{ name: 'projects.view' }" class="nav-link" exact-active-class="active">
+                        <router-link :to="{ name: 'project-view' }" class="nav-link" exact-active-class="active">
                             Overview
                         </router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link :to="{ name: 'projects.view.tasks' }" class="nav-link" active-class="active">
+                        <router-link :to="{ name: 'project-view-task-list' }" class="nav-link" active-class="active">
                             Tasks
                         </router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link :to="{ name: 'projects.view.calendar' }" class="nav-link" active-class="active">
+                        <router-link :to="{ name: 'project-view-calendar' }" class="nav-link" active-class="active">
                             Calendar
                         </router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link :to="{ name: 'projects.view.team' }" class="nav-link" active-class="active">
+                        <router-link :to="{ name: 'project-view-team-list' }" class="nav-link" active-class="active">
                             Team
                         </router-link>
                     </li>

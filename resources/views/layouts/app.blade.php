@@ -38,7 +38,7 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
                         @auth
-                             <router-link :to="{ name: 'projects.list' }" tag="li" class="nav-item" active-class="active">
+                             <router-link :to="{ name: 'project-list' }" tag="li" class="nav-item" active-class="active">
                                 <a class="nav-link">Projects</a>
                             </router-link>
                         @endauth
@@ -56,7 +56,7 @@
                             </li>
                         @else
 
-                            <notifications-badge></notifications-badge>
+                            <notification-badge></notification-badge>
 
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>

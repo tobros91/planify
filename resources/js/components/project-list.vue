@@ -14,7 +14,7 @@
         <li class="list-group-item" v-for="project in projects">
             <div class="row">
                 <div class="col">
-                    <router-link :to="{ name: 'projects.view', params: { project_id: project.id }}">{{ project.title }}</router-link>
+                    <router-link :to="{ name: 'project-view', params: { project_id: project.id }}">{{ project.title }}</router-link>
                 </div>
             </div>
         </li>
@@ -58,7 +58,7 @@
 
             create ()
             {
-                this.$router.push({ name: 'projects.create' })
+                this.$router.push({ name: 'project-create' })
             }
 
         }
