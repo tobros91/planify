@@ -9,7 +9,10 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
+window.bus = new Vue()
+
 Vue.component('notificationsBadge', require('./components/notifications-badge'));
+Vue.component('flasher', require('./components/flasher'));
 
 import VueRouter from 'vue-router'
 Vue.use(VueRouter)

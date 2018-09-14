@@ -76,3 +76,46 @@ body {
 .avatar {
     border-radius: 3px;
 }
+
+#messageBar
+{
+    position:fixed;
+    z-index: 10000;
+    top:20px;
+    right:-350px;
+    width:300px;
+    max-height: 0;
+    padding-left:14px;
+    padding-right:14px;
+    padding-bottom: 14px;
+    border-radius:5px;
+    background-color: rgba(60,60,60,0.85);
+    color:#fff;
+    font-size: 14px;
+    opacity: 0;
+    box-shadow:0px 0px 15px 0px rgba(50, 50, 50, 0.31);
+    transition:right 300ms ease, opacity 300ms ease, max-height 1s ease;
+
+    .message
+    {
+        float: left;
+        width: 100%;
+        margin-top: 7px;
+        padding-top:7px;
+        border-top: 1px solid #767676;
+    }
+
+    .message:first-child
+    {
+        border-top:none;
+    }
+
+}
+
+
+#messageBar.visible
+{
+    right:20px;
+    opacity:1;
+    max-height:1000px;
+}

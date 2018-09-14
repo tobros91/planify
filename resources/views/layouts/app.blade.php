@@ -22,6 +22,9 @@
 </head>
 <body>
     <div id="app">
+
+        <flasher></flasher>
+
         <nav class="navbar navbar-expand-md navbar-dark bg-primary">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">

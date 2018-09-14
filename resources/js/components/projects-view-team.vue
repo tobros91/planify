@@ -86,6 +86,7 @@
                     this.email = '';
                     this.error = '';
                     this.$store.dispatch('project/get', this.project.id)
+                    bus.$emit('flash', 'The user got invited.')
                 })
                 .catch((error) => {
                     console.log(error);
@@ -110,6 +111,7 @@
                 .then((response) => {
                     console.log(response);
                     this.$store.dispatch('project/get', this.project.id)
+                    bus.$emit('flash', 'The user got kicked.')
                 })
                 .catch((error) => {
 
