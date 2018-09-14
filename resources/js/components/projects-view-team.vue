@@ -25,6 +25,9 @@
     <ul class="list-group mt-3">
         <li class="list-group-item" v-for="user in project.team">
             <div class="row">
+                 <div class="col-1">
+                    <img class="img-fluid avatar" :src="user.image_url">
+                </div>
                 <div class="col">
                     {{ user.name }}
                     <i class="fas fa-clock" title="Pending" v-if="!user.pivot.accepted_at && !user.pivot.rejected_at"></i>

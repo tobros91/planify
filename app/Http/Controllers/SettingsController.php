@@ -53,17 +53,14 @@ class SettingsController extends Controller
 
         $user = auth()->user();
 
-        $upload = $request->file('file');
-        $filename = $upload->getClientOriginalName();
-        $extension = strtolower($upload->getClientOriginalExtension());
-
-        $path = $upload->store('avatars');
+        $upload            = $request->file('file');
+        $original_basename = $upload->getClientOriginalName();
+        $path              = $upload->store('avatars');
 
         $file = $user->image()->create([
-            'user_id' => $user->id,
-            'filename' => $filename,
-            'extension' => $extension,
-            'path' => $path
+            'user_id'           => $user->id,
+            'path'              => $path,
+            'original_basename' => $original_basename,
         ]);
 
         $file->generateThumbs();

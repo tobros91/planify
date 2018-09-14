@@ -40,15 +40,6 @@ class ProfileController extends Controller
     {
         $user = User::findOrFail($user_id);
 
-        $full_path = Storage::get($user->image->path);
-        $image = Image::cache(function ($image) use ($full_path) {
-            $image->make($full_path)->resize(300, null, function ($constraint) {
-                $constraint->aspectRatio();
-            });
-        });
-
-        return response()->streamDownload(function () use ($image) {
-            echo $image;
-        }, $user->image->filename);
+        return $user->image->streamResponse(800);
     }
 }

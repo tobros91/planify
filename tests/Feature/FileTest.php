@@ -38,8 +38,7 @@ class FileTest extends TestCase
         $this->assertDatabaseHas('files', [
             'fileable_id' => 1,
             'fileable_type' => 'App\User',
-            'filename' => 'avatar.jpg',
-            'extension' => 'jpg'
+            'original_basename' => 'avatar.jpg'
         ]);
 
         $data = $response->decodeResponseJson();
