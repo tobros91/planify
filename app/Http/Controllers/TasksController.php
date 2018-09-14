@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use App\Task;
 use App\Project;
 use Carbon\Carbon;
@@ -20,16 +21,22 @@ class TasksController extends Controller
         $task = $project->tasks()->create([
             'user_id'     => $request->user()->id,
             'title'       => $request->input('title'),
-            'description' => $request->input('description'),
             'starts_at'   => Carbon::parse($request->input('starts_at'))->toDateTimeString(),
             'ends_at'     => Carbon::parse($request->input('ends_at'))->toDateTimeString(),
+        ]);
+
+        $task->comments()->create([
+            'body' => $request->input('comment'),
+            'user_id' => $request->user()->id
         ]);
 
         return $task;
     }
 
-    public function show(Task $task)
+    public function show($task_id)
     {
+        $task = Task::with('team', 'comments')->findOrFail($task_id);
+
         return $task;
     }
 
@@ -46,5 +53,21 @@ class TasksController extends Controller
     public function destroy(Task $task)
     {
         //
+    }
+
+    public function assign(Request $request, Task $task)
+    {
+        $user = User::findOrFail($request->input('user_id'));
+
+        $team = $task->assign($user);
+
+        return response($team, 201);
+    }
+
+    public function kick(Request $request, Task $task)
+    {
+        $user = User::findOrFail($request->input('user_id'));
+
+        $task->kick($user);
     }
 }

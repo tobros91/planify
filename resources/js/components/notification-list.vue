@@ -27,20 +27,26 @@
 <script>
 
     import invitedToProject from './notifications/invited-to-project'
+    import assignedToTask from './notifications/assigned-to-task'
+    import kickedFromTask from './notifications/kicked-from-task'
 
     export default {
 
         components: {
 
             invitedToProject,
-
+            assignedToTask,
+            assignedToTask,
+            kickedFromTask
         },
 
         data ()
         {
             return {
                 typeToComponent: {
-                    'App\\Notifications\\InvitedToProject': 'invited-to-project'
+                    'App\\Notifications\\InvitedToProject': 'invited-to-project',
+                    'App\\Notifications\\AssignedToTask': 'assigned-to-task',
+                    'App\\Notifications\\KickedFromTask': 'kicked-from-task',
                 }
             }
         },

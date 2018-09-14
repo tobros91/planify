@@ -38,8 +38,24 @@ router.beforeEach((to, from, next) => {
 
 import store from './store'
 
+Vue.mixin({
+    computed: {
+        auth ()
+        {
+            return this.$store.state.auth
+        }
+    }
+})
+
 const app = new Vue({
     el: '#app',
     router,
-    store
+    store,
+    created ()
+    {
+        if (!isAuth) {
+            return
+        }
+        this.$store.dispatch('auth/get')
+    }
 });

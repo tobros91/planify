@@ -17,10 +17,10 @@
 
             <input-text
                 type="textarea"
-                name="description"
-                label="Description"
-                v-model="task.description"
-                :error="errors.description"
+                name="comment"
+                label="Comment"
+                v-model="task.comment"
+                :error="errors.comment"
             />
 
             <input-datepicker

@@ -26,6 +26,16 @@ class ProjectsTableSeeder extends Seeder
             $task1->team()->save($user1);
             $task1->team()->save($user2);
 
+
+            $task1->comments()->save(factory(App\Comment::class)->make([
+                'user_id' => $task1->user_id
+            ]));
+
+            $task2->comments()->save(factory(App\Comment::class)->make([
+                'user_id' => $task2->user_id
+            ]));
+
+
             $task2->team()->save($user1);
             $task2->team()->save($user2);
             $task2->team()->save($user3);

@@ -34,5 +34,7 @@ Route::post('data/projects/{project}/teams/respond', 'ProjectsTeamsController@re
 Route::resource('data/projects.teams', 'ProjectsTeamsController');
 Route::resource('data/projects.tasks', 'TasksController');
 
+Route::post('/tasks/{task}/assign', 'TasksController@assign');
+Route::post('/tasks/{task}/kick', 'TasksController@kick');
 
 Route::get('{all}', 'HomeController@router')->where(['all' => '.*']);

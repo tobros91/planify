@@ -26,7 +26,7 @@
 
             onNotificationsPage ()
             {
-                return this.$route.name == 'notifications.list' ? true : false
+                return this.$route.name == 'notification-list' ? true : false
             }
 
         },
