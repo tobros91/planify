@@ -33,7 +33,7 @@ class ProjectTest extends TestCase
         $this->actingAs($user);
 
         // Then
-        $response = $this->get(route('projects.index'));
+        $response = $this->get('/data/projects');
 
         $response->assertStatus(200);
         $response->assertSee('Project 1');
@@ -56,7 +56,7 @@ class ProjectTest extends TestCase
         $this->actingAs($user);
 
         // Then
-        $response = $this->get(route('projects.show', ['project_id' => $project->id]));
+        $response = $this->get('/data/projects/'.$project->id);
 
         $response->assertStatus(200);
         $response->assertSee('Project 1');

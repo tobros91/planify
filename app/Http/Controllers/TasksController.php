@@ -7,8 +7,6 @@ use App\Task;
 use App\Project;
 use Carbon\Carbon;
 use App\Notifications\CommentSubmited;
-use App\Http\Requests\TaskStore;
-use App\Http\Requests\TaskComment;
 use Illuminate\Http\Request;
 
 class TasksController extends Controller
@@ -16,10 +14,19 @@ class TasksController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+
+        $this->middleware('project.team');
     }
 
-    public function store(TaskStore $request, Project $project)
+    public function store(Request $request, Project $project)
     {
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'comment' => 'required|string',
+            'starts_at' => 'date',
+            'ends_at' => 'date',
+        ]);
+
         $task = $project->tasks()->create([
             'user_id'     => $request->user()->id,
             'title'       => $request->input('title'),
@@ -35,17 +42,19 @@ class TasksController extends Controller
         return $task;
     }
 
-    public function show($project_id, $task_id)
+    public function show(Project $project, Task $task)
     {
-        $project = Project::thatUserCanAccess()->findOrFail($project_id);
-
-        $task = Task::with('team', 'comments')->findOrFail($task_id);
+        $task->load('team', 'comments');
 
         return $task;
     }
 
-    public function comment(TaskComment $request, Task $task)
+    public function comment(Request $request, Project $project, Task $task)
     {
+        $request->validate([
+            'body' => 'required|string'
+        ]);
+
         $comment = $task->comments()->create([
             'body' => $request->input('body'),
             'user_id' => $request->user()->id
@@ -60,7 +69,7 @@ class TasksController extends Controller
         return $comment;
     }
 
-    public function assign(Request $request, Task $task)
+    public function assign(Request $request, Project $project, Task $task)
     {
         $user = User::findOrFail($request->input('user_id'));
 
@@ -69,7 +78,7 @@ class TasksController extends Controller
         return response($team, 201);
     }
 
-    public function kick(Request $request, Task $task)
+    public function kick(Request $request, Project $project, Task $task)
     {
         $user = User::findOrFail($request->input('user_id'));
 

@@ -22,11 +22,11 @@ class ProjectTeamTest extends TestCase
         // When
         $this->actingAs($user);
 
-        $inviteResponse = $this->json('POST', '/data/projects/'.$project->id.'/teams', [
+        $inviteResponse = $this->json('POST', '/data/projects/'.$project->id.'/invite', [
             'email' => 'invitemepls@example.com'
         ]);
 
-        $kickResponse = $this->json('POST', '/data/projects/'.$project->id.'/teams', [
+        $kickResponse = $this->json('POST', '/data/projects/'.$project->id.'/kick', [
             'email' => 'invitemepls@example.com'
         ]);
 
@@ -47,7 +47,7 @@ class ProjectTeamTest extends TestCase
         // When
         $this->actingAs($project->user);
 
-        $response = $this->json('POST', '/data/projects/'.$project->id.'/teams', [
+        $response = $this->json('POST', '/data/projects/'.$project->id.'/invite', [
             'email' => 'invitemepls@example.com',
             'message' => 'Come to the dark side, we have cookies.'
         ]);
@@ -77,7 +77,7 @@ class ProjectTeamTest extends TestCase
         // When
         $this->actingAs($project->user);
 
-        $response = $this->json('POST', '/data/projects/'.$project->id.'/teams', [
+        $response = $this->json('POST', '/data/projects/'.$project->id.'/invite', [
             'email' => 'invitemepls@example.com',
             'message' => 'Come to the dark side, we have cookies.'
         ]);
@@ -98,7 +98,9 @@ class ProjectTeamTest extends TestCase
         // When
         $this->actingAs($project->user);
 
-        $response = $this->delete('/data/projects/'.$project->id.'/teams/'.$user2->id);
+        $response = $this->json('POST', '/data/projects/'.$project->id.'/kick', [
+            'user_id' => $user2->id,
+        ]);
 
         // Then
         $response->assertStatus(200);

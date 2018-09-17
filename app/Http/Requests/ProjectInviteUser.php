@@ -3,19 +3,14 @@
 namespace App\Http\Requests;
 
 use App\User;
-use App\Project;
-use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
-
-use Log;
 
 class ProjectInviteUser extends FormRequest
 {
 
     public function authorize()
     {
-        $project = $this->route('project');
-        return $project && $this->user()->id == $project->user_id;
+        return true;
     }
 
     public function rules()

@@ -37,6 +37,7 @@ class TaskTest extends TestCase
         $response->assertStatus(201);
     }
 
+    /** @test */
     public function only_project_team_members_can_store_tasks()
     {
         // Given

@@ -29,13 +29,21 @@ Route::get('/data/profile/{user}/avatar', 'ProfileController@avatar');
 Route::get('/data/notifications', 'NotificationController@index');
 Route::put('/data/notifications/{notification}/markAsRead', 'NotificationController@markAsRead');
 
-Route::resource('data/projects', 'ProjectsController');
-Route::post('data/projects/{project}/teams/respond', 'ProjectsTeamsController@respond');
-Route::resource('data/projects.teams', 'ProjectsTeamsController');
-Route::resource('data/projects.tasks', 'TasksController');
+Route::get('data/projects', 'ProjectsController@index');
+Route::post('data/projects', 'ProjectsController@store');
+Route::get('data/projects/{project}', 'ProjectsController@show');
 
-Route::post('/data/tasks/{task}/assign', 'TasksController@assign');
-Route::post('/data/tasks/{task}/kick', 'TasksController@kick');
-Route::post('/data/tasks/{task}/comment', 'TasksController@comment');
+Route::post('data/projects/{project}/invite', 'ProjectsController@invite');
+Route::post('data/projects/{project}/respondToInvitation', 'ProjectsController@respondToInvitation');
+Route::post('data/projects/{project}/kick', 'ProjectsController@kick');
+
+
+Route::get('data/projects/{project}/tasks', 'TasksController@index');
+Route::post('data/projects/{project}/tasks', 'TasksController@store');
+Route::get('data/projects/{project}/tasks/{task}', 'TasksController@show');
+
+Route::post('data/projects/{project}/tasks/{task}/assign', 'TasksController@assign');
+Route::post('data/projects/{project}/tasks/{task}/kick', 'TasksController@kick');
+Route::post('data/projects/{project}/tasks/{task}/comment', 'TasksController@comment');
 
 Route::get('{all}', 'HomeController@router')->where(['all' => '.*']);

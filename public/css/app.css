@@ -15518,6 +15518,24 @@ readers do not read off random characters that represent icons */
  */
 
 @font-face {
+  font-family: 'Font Awesome 5 Free';
+  font-style: normal;
+  font-weight: 400;
+  src: url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-regular-400.eot?7422060ca379ee9939d3b687d072acad);
+  src: url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-regular-400.eot?7422060ca379ee9939d3b687d072acad) format("embedded-opentype"), url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-regular-400.woff2?949a2b066ec37f5a384712fc7beaf2f1) format("woff2"), url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-regular-400.woff?381af09a1366b6c2ae65eac5dd6f0588) format("woff"), url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-regular-400.ttf?73fe7f1effbf382f499831a0a9f18626) format("truetype"), url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-regular-400.svg?b5a61b229c9c92a6ac21f5b0e3c6e9f1) format("svg");
+}
+
+.far {
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 400;
+}
+
+/*!
+ * Font Awesome Free 5.3.1 by @fontawesome - https://fontawesome.com
+ * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
+ */
+
+@font-face {
   font-family: 'Font Awesome 5 Brands';
   font-style: normal;
   font-weight: normal;
@@ -15527,6 +15545,10 @@ readers do not read off random characters that represent icons */
 
 .fab {
   font-family: 'Font Awesome 5 Brands';
+}
+
+body {
+  overflow-y: scroll;
 }
 
 .row-tasks {
@@ -15662,5 +15684,65 @@ readers do not read off random characters that represent icons */
 
 .weekDaysRow:last-child .date {
   border-bottom: 1px solid #ccc;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  -webkit-transition: opacity .3s ease;
+  transition: opacity .3s ease;
+}
+
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.avatar {
+  border-radius: 3px;
+}
+
+.list-group-item .assignee {
+  max-width: 30px;
+  max-heigt: 30px;
+  margin-right: 5px;
+}
+
+#messageBar {
+  position: fixed;
+  z-index: 10000;
+  top: 20px;
+  right: -350px;
+  width: 300px;
+  max-height: 0;
+  padding-left: 14px;
+  padding-right: 14px;
+  padding-bottom: 14px;
+  border-radius: 5px;
+  background-color: rgba(60, 60, 60, 0.85);
+  color: #fff;
+  font-size: 14px;
+  opacity: 0;
+  -webkit-box-shadow: 0px 0px 15px 0px rgba(50, 50, 50, 0.31);
+          box-shadow: 0px 0px 15px 0px rgba(50, 50, 50, 0.31);
+  -webkit-transition: right 300ms ease, opacity 300ms ease, max-height 1s ease;
+  transition: right 300ms ease, opacity 300ms ease, max-height 1s ease;
+}
+
+#messageBar .message {
+  float: left;
+  width: 100%;
+  margin-top: 7px;
+  padding-top: 7px;
+  border-top: 1px solid #767676;
+}
+
+#messageBar .message:first-child {
+  border-top: none;
+}
+
+#messageBar.visible {
+  right: 20px;
+  opacity: 1;
+  max-height: 1000px;
 }
 

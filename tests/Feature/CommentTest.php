@@ -22,7 +22,7 @@ class CommentTest extends TestCase
         // When
         $this->actingAs($task->user);
 
-        $response = $this->json('POST', '/data/tasks/'.$task->id.'/comment', [
+        $response = $this->json('POST', '/data/projects/'.$task->project->id.'/tasks/'.$task->id.'/comment', [
             'body' => 'test',
         ]);
 
@@ -45,7 +45,7 @@ class CommentTest extends TestCase
 
         // When
         $this->actingAs($user);
-        $response = $this->json('POST', '/data/tasks/'.$task->id.'/comment');
+        $response = $this->json('POST', '/data/projects/'.$task->project->id.'/tasks/'.$task->id.'/comment');
 
         // Then
         $response->assertStatus(403);
@@ -66,7 +66,7 @@ class CommentTest extends TestCase
         // When
         $this->actingAs($task->user);
 
-        $response = $this->json('POST', '/data/tasks/'.$task->id.'/comment', [
+        $response = $this->json('POST', '/data/projects/'.$task->project->id.'/tasks/'.$task->id.'/comment', [
             'body' => 'test',
         ]);
 
