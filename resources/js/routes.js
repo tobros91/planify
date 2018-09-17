@@ -70,4 +70,9 @@ export default [
         component: require('./components/settings'),
         meta: { requiresAuth: true }
     },
+    {
+        path: '/403',
+        name: '403',
+        component: require('./components/403'),
+    },
 ]

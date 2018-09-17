@@ -7,6 +7,14 @@
 
 require('./bootstrap');
 
+axios.interceptors.response.use(null, (error) => {
+    if (error.response.status === 403) {
+        router.push({ name: '403' })
+    }
+
+    return Promise.reject(error);
+});
+
 window.Vue = require('vue');
 
 window.bus = new Vue()
