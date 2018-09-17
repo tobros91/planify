@@ -24,7 +24,7 @@
             />
 
 
-            <button type="submit" class="btn btn-primary float-right" @click="store()">Store</button>
+            <button type="submit" class="btn btn-primary float-right" :disabled="submited" @click="store()">Create project</button>
 
         </div>
 
@@ -49,7 +49,8 @@
                     title: '',
                     description: ''
                 },
-                errors: {}
+                errors: {},
+                submited: false
             }
         },
 
@@ -57,21 +58,25 @@
 
             store ()
             {
+                if (this.submited) {
+                    return
+                }
+
+                this.submited = true
+
                 axios.post('/data/projects',
                     this.project
                 )
                 .then((response) => {
-                    console.log(response);
-
+                    this.submited = false
+                    bus.$emit('flash', 'Project created')
                     this.$router.push({ name: 'project-view', params: { project_id: response.data.id }})
                 })
                 .catch((error) => {
-                    console.log(error.response);
-
+                    this.submited = false
                     if (error.response.status === 422) {
                         this.errors = error.response.data.errors
                     }
-
                 });
             }
 

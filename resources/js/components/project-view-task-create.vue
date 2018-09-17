@@ -105,6 +105,7 @@
                 .then((response) => {
                     console.log(response.data);
 
+                    bus.$emit('flash', 'Task created')
                     this.$router.push({ name: 'project-view-task-view', params: { task_id: response.data.id }})
                 })
                 .catch((error) => {

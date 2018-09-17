@@ -20,15 +20,9 @@ export default {
 
     getters: {
 
-        filterTasks: (state) => (filter) => {
-
-            if (!filter.user_id) {
-                return state.project.tasks
-            }
-
-            return state.project.tasks.filter((task) => {
-                return task.team.map(o => o['id']).indexOf(filter.user_id) !== -1
-            })
+        authIsOwner (state, getters, rootState)
+        {
+            return state.project.user_id === rootState.auth.user.id
         }
 
     },

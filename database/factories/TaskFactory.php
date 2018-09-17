@@ -9,9 +9,24 @@ $factory->define(App\Task::class, function (Faker $faker) {
 
     return [
         'title' => $faker->sentence,
-        'user_id' => factory(App\User::class)->create()->id,
-        'project_id' => factory(App\Project::class)->create()->id,
+        'project_id' => function () {
+            return  factory(App\Project::class)->create()->id;
+        },
+        'user_id' => function (array $post) {
+            return App\Project::find($post['project_id'])->user_id;
+        },
         'starts_at' => $starts_at,
         'ends_at' => $ends_at,
     ];
+});
+
+$factory->afterCreating(App\Task::class, function ($task, $faker) {
+    if ($task->project->team()->find($task->user_id) == null) {
+        $task->project->team()->attach($task->user_id, ['accepted_at' => now()]);
+    }
+    $task->team()->attach($task->user_id, ['accepted_at' => now()]);
+    $task->comments()->save(factory(App\Comment::class)->make([
+        'user_id' => $task->user_id,
+        'task_id' => $task->id,
+    ]));
 });

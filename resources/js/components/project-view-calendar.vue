@@ -52,7 +52,7 @@
 
                                 <div :class="[task.classWidth, task.classBorderLeft, task.classBorderRight]"
                                      style="background-color: #8c8c8c;"
-                                     @click="edit(task.id)">
+                                     @click="view(task.id)">
                                     <span class="d-inline-block w-100 text-truncate">
                                         <b>{{ task.title }}</b>
                                     </span>
@@ -175,12 +175,12 @@
 
             create ()
             {
-                this.$router.push({ name: 'project-view-task-create', params: { project_id: this.$route.params.project_id }})
+                this.$router.push({ name: 'project-view-task-create' })
             },
 
-            edit (task_id)
+            view (task_id)
             {
-                this.$router.push({ name: 'project-view-task-edit', params: { project_id: this.$route.params.project_id, task_id: task_id }})
+                this.$router.push({ name: 'project-view-task-view', params: { task_id: task_id }})
             },
 
             previousMonth ()

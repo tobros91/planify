@@ -28,6 +28,11 @@ class Project extends Model
         return $this->morphToMany(User::class, 'teamable', 'teams')->withPivot('accepted_at', 'rejected_at');
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function scopeThatUserCanAccess($query, $user = null)
     {
         if (!$user) {
@@ -60,5 +65,15 @@ class Project extends Model
         if (auth()->user()->id !== $user->id) {
             $user->notify(new KickedFromProject($this));
         }
+    }
+
+
+    public function userCanAccess($user = null)
+    {
+        if (!$user) {
+            $user = auth()->user();
+        }
+
+        return self::thatUserCanAccess($user)->first() === null ? false : true;
     }
 }

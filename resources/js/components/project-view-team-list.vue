@@ -13,7 +13,7 @@
     </div>
 
     <ul class="list-group mt-3">
-        <li class="list-group-item" v-for="user in project.team">
+        <li class="list-group-item" v-for="user in filteredTeam">
             <div class="row">
                  <div class="col-1">
                     <img class="img-fluid avatar" :src="user.image_url">
@@ -26,7 +26,7 @@
                     {{ user.email }}
                 </div>
                 <div class="col">
-                    <div class="btn btn-danger btn-sm float-right" @click="kick(user.id)">
+                    <div class="btn btn-danger btn-sm float-right" @click="kick(user.id)" v-if="authIsOwner && user.id != auth.user.id">
                         Kick
                     </div>
                 </div>
@@ -55,7 +55,23 @@
             project ()
             {
                 return this.$store.state.project.project
-            }
+            },
+
+            authIsOwner ()
+            {
+                return this.$store.getters['project/authIsOwner']
+            },
+
+            filteredTeam ()
+            {
+                const text = this.filter.text.toLowerCase()
+
+                return this.project.team.filter((user) => {
+                    return user.name.toLowerCase().indexOf(text) !== -1
+                           ||
+                           user.email.toLowerCase().indexOf(text) !== -1
+                })
+            },
 
         },
 

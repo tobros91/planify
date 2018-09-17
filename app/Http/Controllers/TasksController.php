@@ -6,7 +6,9 @@ use App\User;
 use App\Task;
 use App\Project;
 use Carbon\Carbon;
-use App\Http\Requests\StoreTask;
+use App\Notifications\CommentSubmited;
+use App\Http\Requests\TaskStore;
+use App\Http\Requests\TaskComment;
 use Illuminate\Http\Request;
 
 class TasksController extends Controller
@@ -16,7 +18,7 @@ class TasksController extends Controller
         $this->middleware('auth');
     }
 
-    public function store(StoreTask $request, Project $project)
+    public function store(TaskStore $request, Project $project)
     {
         $task = $project->tasks()->create([
             'user_id'     => $request->user()->id,
@@ -33,26 +35,29 @@ class TasksController extends Controller
         return $task;
     }
 
-    public function show($task_id)
+    public function show($project_id, $task_id)
     {
+        $project = Project::thatUserCanAccess()->findOrFail($project_id);
+
         $task = Task::with('team', 'comments')->findOrFail($task_id);
 
         return $task;
     }
 
-    public function edit(Project $project, Task $task)
+    public function comment(TaskComment $request, Task $task)
     {
-        return $task;
-    }
+        $comment = $task->comments()->create([
+            'body' => $request->input('body'),
+            'user_id' => $request->user()->id
+        ]);
 
-    public function update(Request $request, Task $task)
-    {
-        //
-    }
+        foreach ($task->team as $user) {
+            if ($request->user()->id !== $user->id) {
+                $user->notify(new CommentSubmited($task));
+            }
+        }
 
-    public function destroy(Task $task)
-    {
-        //
+        return $comment;
     }
 
     public function assign(Request $request, Task $task)

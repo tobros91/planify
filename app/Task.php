@@ -4,6 +4,7 @@ namespace App;
 
 use App\User;
 use App\Comment;
+use App\Project;
 use App\Notifications\AssignedToTask;
 use App\Notifications\KickedFromTask;
 use Illuminate\Database\Eloquent\Model;
@@ -28,6 +29,15 @@ class Task extends Model
         return $this->hasMany(Comment::class);
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function project()
+    {
+        return $this->belongsTo(Project::class);
+    }
 
     public function assign(User $user)
     {

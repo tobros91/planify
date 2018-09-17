@@ -30,6 +30,7 @@
     import kickedFromProject from './notifications/kicked-from-project'
     import assignedToTask from './notifications/assigned-to-task'
     import kickedFromTask from './notifications/kicked-from-task'
+    import commentSubmited from './notifications/comment-submited'
 
     export default {
 
@@ -38,7 +39,8 @@
             invitedToProject,
             kickedFromProject,
             assignedToTask,
-            kickedFromTask
+            kickedFromTask,
+            commentSubmited
         },
 
         data ()
@@ -49,6 +51,7 @@
                     'App\\Notifications\\KickedFromProject': 'kicked-from-project',
                     'App\\Notifications\\AssignedToTask': 'assigned-to-task',
                     'App\\Notifications\\KickedFromTask': 'kicked-from-task',
+                    'App\\Notifications\\CommentSubmited': 'comment-submited',
                 }
             }
         },

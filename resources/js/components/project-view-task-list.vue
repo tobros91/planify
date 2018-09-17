@@ -3,11 +3,11 @@
 
     <div class="row">
         <div class="col">
-            <input type="text" class="form-control" placeholder="Search all tasks" v-model="filter.text">
+            <input type="text" class="form-control" placeholder="Search tasks" v-model="filter.text">
         </div>
         <div class="col">
             <select class="form-control" v-model="filter.user_id">
-                <option :value="null">User</option>
+                <option :value="null">Filter assignee</option>
                 <option v-for="user in project.team" :value="user.id">{{ user.name }}</option>
             </select>
         </div>
@@ -19,17 +19,18 @@
     </div>
 
     <ul class="list-group mt-3">
-        <li class="list-group-item">
+        <li class="list-group-item" v-if="project.tasks.length === 0">
+            No tasks
+        </li>
+        <li class="list-group-item" v-if="project.tasks.length > 0">
             <div class="row">
-                <div class="col">
-
-                </div>
+                <div class="col"></div>
                 <div class="col-3">
                     Assignees
                 </div>
             </div>
         </li>
-        <li class="list-group-item" v-for="task in tasks">
+        <li class="list-group-item" v-for="task in filteredTasks">
             <div class="row">
                 <div class="col">
                     <router-link :to="{ name: 'project-view-task-view', params: { task_id: task.id }}" class="h4">{{ task.title }}</router-link>
@@ -67,9 +68,23 @@
                 return this.$store.state.project.project
             },
 
-            tasks ()
+            filteredTasks ()
             {
-                return this.$store.getters['project/filterTasks'](this.filter)
+                let tasks = this.project.tasks
+
+                if (this.filter.user_id) {
+                    tasks = tasks.filter((task) => {
+                        return task.team.map(o => o['id']).indexOf(this.filter.user_id) !== -1
+                    })
+                }
+
+                if (this.filter.text) {
+                    tasks = tasks.filter((task) => {
+                        return task.title.toLowerCase().indexOf(this.filter.text.toLowerCase()) !== -1
+                    })
+                }
+
+                return tasks
             }
 
         },

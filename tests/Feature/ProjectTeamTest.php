@@ -13,19 +13,39 @@ class ProjectTeamTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
+    public function only_project_owner_can_invite_or_kick_team_members()
+    {
+        // Given
+        $project = factory(Project::class)->create();
+
+        $user = factory(User::class)->create();
+        // When
+        $this->actingAs($user);
+
+        $inviteResponse = $this->json('POST', '/data/projects/'.$project->id.'/teams', [
+            'email' => 'invitemepls@example.com'
+        ]);
+
+        $kickResponse = $this->json('POST', '/data/projects/'.$project->id.'/teams', [
+            'email' => 'invitemepls@example.com'
+        ]);
+
+        // Then
+        $inviteResponse->assertStatus(403);
+        $kickResponse->assertStatus(403);
+    }
+
+    /** @test */
     public function project_owner_can_invite_users()
     {
         // Given
-        $user1 = factory(User::class)->create();
-        $project = factory(Project::class)->create([
-            'user_id' => $user1->id
-        ]);
+        $project = factory(Project::class)->create();
 
         $user2 = factory(User::class)->create([
             'email' => 'invitemepls@example.com'
         ]);
         // When
-        $this->actingAs($user1);
+        $this->actingAs($project->user);
 
         $response = $this->json('POST', '/data/projects/'.$project->id.'/teams', [
             'email' => 'invitemepls@example.com',
@@ -47,10 +67,7 @@ class ProjectTeamTest extends TestCase
     public function user_can_not_get_invited_twice()
     {
         // Given
-        $user1 = factory(User::class)->create();
-        $project = factory(Project::class)->create([
-            'user_id' => $user1->id
-        ]);
+        $project = factory(Project::class)->create();
 
         $user2 = factory(User::class)->create([
             'email' => 'invitemepls@example.com'
@@ -58,7 +75,7 @@ class ProjectTeamTest extends TestCase
         $project->team()->save($user2);
 
         // When
-        $this->actingAs($user1);
+        $this->actingAs($project->user);
 
         $response = $this->json('POST', '/data/projects/'.$project->id.'/teams', [
             'email' => 'invitemepls@example.com',
@@ -73,16 +90,13 @@ class ProjectTeamTest extends TestCase
     public function project_owner_can_kick_users()
     {
        // Given
-        $user1 = factory(User::class)->create();
-        $project = factory(Project::class)->create([
-            'user_id' => $user1->id
-        ]);
+        $project = factory(Project::class)->create();
 
         $user2 = factory(User::class)->create();
         $project->team()->save($user2);
 
         // When
-        $this->actingAs($user1);
+        $this->actingAs($project->user);
 
         $response = $this->delete('/data/projects/'.$project->id.'/teams/'.$user2->id);
 

@@ -2,9 +2,6 @@
 <div class="container" v-if="task">
     <h3>
         {{ task.title }}
-        <div class="btn btn-primary btn-sm float-right" @click="edit()">
-            Edit
-        </div>
     </h3>
     <div class="row mt-3">
         <div class="col">
@@ -15,7 +12,7 @@
                 <div class="col">
                     <div class="card">
                         <div class="card-header">
-                            {{ comment.user.name}}
+                            {{ comment.user.name }} - <span class="text-muted">{{ comment.created_at.substr(0, 16) }}</span>
                         </div>
                         <div class="card-body">
                             {{ comment.body }}
@@ -24,21 +21,7 @@
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-1">
-                    <img class="img-fluid avatar" :src="auth.user.image_url">
-                </div>
-                <div class="col">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="form-group">
-                                <textarea class="form-control" rows="5" placeholder="Leave a comment" v-model="body"></textarea>
-                            </div>
-                            <button type="submit" class="btn btn-primary float-right" @click="submit()">Store</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <write-comment :task="task" @submited="fetch()"></write-comment>
 
         </div>
         <div class="col-3">
@@ -69,13 +52,18 @@
 
 <script>
 
+    import writeComment from './project-view-task-view-comment'
+
     export default {
+
+        components: {
+            writeComment,
+        },
 
         data ()
         {
             return {
                 task: undefined,
-                body: '',
                 showAssign: false,
             }
         },
@@ -96,20 +84,6 @@
 
         methods: {
 
-            submit ()
-            {
-                axios.post('/tasks/'+this.task.id+'/comment', {
-                    body: this.body,
-                })
-                .then((response) => {
-                    console.log('store comment response')
-                    console.log(response.data);
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
-            },
-
             isAssignedToTask (user)
             {
                 return this.task.team.find((team) => {
@@ -121,7 +95,7 @@
             {
                 const action = this.isAssignedToTask(user) ? 'kick' : 'assign'
 
-                axios.post('/tasks/'+this.task.id+'/'+action, {
+                axios.post('/data/tasks/'+this.task.id+'/'+action, {
                     user_id: user.id,
                 })
                 .then((response) => {
@@ -132,11 +106,6 @@
                 .catch((error) => {
                     console.log(error);
                 });
-            },
-
-            edit ()
-            {
-                this.$router.push({ name: 'tasks.edit', params: { task_id: this.$route.params.task_id }})
             },
 
             fetch ()

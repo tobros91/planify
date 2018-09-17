@@ -37,11 +37,6 @@ export default [
                 component: require('./components/project-view-task-view')
             },
             {
-                path: 'tasks/:task_id/edit',
-                name: 'project-view-task-edit',
-                component: require('./components/project-view-task-edit')
-            },
-            {
                 path: 'calendar',
                 name: 'project-view-calendar',
                 component: require('./components/project-view-calendar')
