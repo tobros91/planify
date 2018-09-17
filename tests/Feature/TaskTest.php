@@ -31,7 +31,7 @@ class TaskTest extends TestCase
 
         $response = $this->json('POST', '/data/projects/'.$project->id.'/tasks', [
             'title' => 'Task 1',
-            'description' => 'test',
+            'comment' => 'test',
             'starts_at' => $starts_at,
             'ends_at' => $ends_at,
         ]);
@@ -41,7 +41,6 @@ class TaskTest extends TestCase
         $response->assertStatus(201)
                  ->assertJson([
                     'title' => 'Task 1',
-                    'description' => 'test',
                     'starts_at' => $starts_at,
                     'ends_at' => $ends_at,
                  ]);

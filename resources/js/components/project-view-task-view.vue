@@ -32,7 +32,7 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="form-group">
-                                <textarea class="form-control" rows="5" placeholder="Leave a comment"></textarea>
+                                <textarea class="form-control" rows="5" placeholder="Leave a comment" v-model="body"></textarea>
                             </div>
                             <button type="submit" class="btn btn-primary float-right" @click="submit()">Store</button>
                         </div>
@@ -44,15 +44,15 @@
         <div class="col-3">
             <div class="row">
                 <div class="col">
-                    <b @click="showAssign = !showAssign">Assignees <i class="fas fa-user-cog"></i></b>
+                    <b class="d-flex justify-content-between align-items-center" style="cursor: pointer;" @click="showAssign = !showAssign">Assignees <i class="fas fa-user-cog"></i></b>
                     <div class="row" v-for="user in task.team" v-if="!showAssign">
-                        <div class="col">{{ user.name }}</div>
+                        <div class="col"><img class="avatar" width="25" :src="user.image_url"> {{ user.name }}</div>
                     </div>
-                    <ul class="list-group" v-if="!showAssign">
-                        <li class="list-group-item d-flex justify-content-between align-items-center pl-0 pr-0" v-for="user in project.team" @click="assign(user)">
+                    <ul class="list-group" v-if="showAssign">
+                        <li class="list-group-item d-flex justify-content-between align-items-center pl-1 pr-1" style="cursor: pointer;" v-for="user in project.team" @click="assign(user)">
 
                             <span>
-                                <img class="avatar" width="50" :src="user.image_url">
+                                <img class="avatar" width="25" :src="user.image_url">
                                 {{ user.name }}
                             </span>
 
@@ -75,6 +75,7 @@
         {
             return {
                 task: undefined,
+                body: '',
                 showAssign: false,
             }
         },
@@ -95,6 +96,20 @@
 
         methods: {
 
+            submit ()
+            {
+                axios.post('/tasks/'+this.task.id+'/comment', {
+                    body: this.body,
+                })
+                .then((response) => {
+                    console.log('store comment response')
+                    console.log(response.data);
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+            },
+
             isAssignedToTask (user)
             {
                 return this.task.team.find((team) => {
@@ -112,6 +127,7 @@
                 .then((response) => {
                     console.log('got assign response')
                     console.log(response.data);
+                    this.fetch()
                 })
                 .catch((error) => {
                     console.log(error);

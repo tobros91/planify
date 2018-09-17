@@ -51,6 +51,11 @@ export default [
                 name: 'project-view-team-list',
                 component: require('./components/project-view-team-list')
             },
+            {
+                path: 'team/invite',
+                name: 'project-view-team-invite',
+                component: require('./components/project-view-team-invite')
+            },
         ]
     },
     {

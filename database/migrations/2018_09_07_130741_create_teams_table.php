@@ -17,12 +17,12 @@ class CreateTeamsTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->integer('teamable_id')->unsigned();
             $table->string('teamable_type');
-
-            $table->primary(['user_id', 'teamable_id', 'teamable_type']);
-
+            $table->text('message')->nullable();
             $table->timestamp('accepted_at')->nullable();
             $table->timestamp('rejected_at')->nullable();
             $table->timestamps();
+
+            $table->primary(['user_id', 'teamable_id', 'teamable_type']);
         });
     }
 

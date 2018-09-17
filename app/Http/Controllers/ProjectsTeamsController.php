@@ -17,7 +17,7 @@ class ProjectsTeamsController extends Controller
     {
         $user = User::findByEmail($request->input('email'));
 
-        $team = $project->invite($user);
+        $team = $project->invite($user, $request->input('message'));
 
         return response($team, 201);
     }

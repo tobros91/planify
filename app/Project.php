@@ -5,6 +5,7 @@ namespace App;
 use App\Task;
 use App\User;
 use App\Notifications\InvitedToProject;
+use App\Notifications\KickedFromProject;
 use Illuminate\Database\Eloquent\Model;
 
 use Log;
@@ -39,11 +40,13 @@ class Project extends Model
         });
     }
 
-    public function invite(User $user)
+    public function invite(User $user, $message = null)
     {
-        $this->team()->attach($user->id);
+        $this->team()->attach($user->id, ['message' => $message]);
 
-        $user->notify(new InvitedToProject($this));
+        if (auth()->user()->id !== $user->id) {
+            $user->notify(new InvitedToProject($this));
+        }
     }
 
     public function kick(User $user)
@@ -52,6 +55,10 @@ class Project extends Model
             throw new \Exception("Not a valid user");
         }
 
-        return $this->team()->detach($user->id);
+        $this->team()->detach($user->id);
+
+        if (auth()->user()->id !== $user->id) {
+            $user->notify(new KickedFromProject($this));
+        }
     }
 }

@@ -27,6 +27,7 @@
 <script>
 
     import invitedToProject from './notifications/invited-to-project'
+    import kickedFromProject from './notifications/kicked-from-project'
     import assignedToTask from './notifications/assigned-to-task'
     import kickedFromTask from './notifications/kicked-from-task'
 
@@ -35,7 +36,7 @@
         components: {
 
             invitedToProject,
-            assignedToTask,
+            kickedFromProject,
             assignedToTask,
             kickedFromTask
         },
@@ -45,6 +46,7 @@
             return {
                 typeToComponent: {
                     'App\\Notifications\\InvitedToProject': 'invited-to-project',
+                    'App\\Notifications\\KickedFromProject': 'kicked-from-project',
                     'App\\Notifications\\AssignedToTask': 'assigned-to-task',
                     'App\\Notifications\\KickedFromTask': 'kicked-from-task',
                 }
