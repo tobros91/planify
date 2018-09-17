@@ -33,6 +33,9 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
+
+    store.commit('setRouterLoading', true)
+
     if (to.matched.some(record => record.meta.requiresAuth)) {
         if (!isAuth) {
             window.location.href = '/login'
@@ -48,10 +51,26 @@ import store from './store'
 
 Vue.mixin({
     computed: {
+
         auth ()
         {
             return this.$store.state.auth
+        },
+
+        routerLoading ()
+        {
+            return this.$store.state.routerLoading
         }
+
+    },
+
+    methods: {
+
+        setRouterLoading (loading)
+        {
+            this.$store.commit('setRouterLoading', loading)
+        }
+
     }
 })
 

@@ -10,7 +10,7 @@
 
     </h1>
 
-    <ul class="list-group mt-3">
+    <ul class="list-group mt-3" v-if="!routerLoading">
         <li class="list-group-item" v-for="project in projects">
             <div class="row">
                 <div class="col">
@@ -23,12 +23,22 @@
         </li>
     </ul>
 
+    <loader height="24" v-if="routerLoading"></loader>
+
 </div>
 </template>
 
 <script>
 
+    import loader from './loader'
+
     export default {
+
+        components: {
+
+            loader,
+
+        },
 
         data ()
         {
@@ -50,6 +60,7 @@
                 .then((response) => {
                     console.log(response);
                     this.projects = response.data.projects
+                    this.setRouterLoading(false)
                 })
                 .catch((error) =>{
                     console.log(error);

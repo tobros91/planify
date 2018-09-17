@@ -13,5 +13,16 @@ export default new Vuex.Store({
         project,
         notifications,
         auth
-    }
+    },
+
+    state: {
+        routerLoading: false,
+    },
+
+    mutations: {
+        setRouterLoading (state, routerLoading)
+        {
+            state.routerLoading = routerLoading
+        },
+    },
 })

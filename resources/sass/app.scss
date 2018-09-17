@@ -129,3 +129,27 @@ body {
     opacity:1;
     max-height:1000px;
 }
+
+
+
+@keyframes highlightAnim{
+    0%{
+        background-position: -900px 0
+    }
+    100%{
+        background-position: 900px 0
+    }
+}
+
+.textLoadingBar {
+    animation-duration: 2500ms;
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
+    animation-name: highlightAnim;
+    animation-timing-function: linear;
+    background: #f6f7f8;
+    background: linear-gradient(to right, #eeeeee 8%, #dddddd 28%, #eeeeee 46%);
+    background-size: 900px 200px;
+    height: 24px;
+    position: relative;
+}
