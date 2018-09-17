@@ -20,7 +20,8 @@ export default {
             return new Promise((resolve, reject) => {
                 axios.get('/data/notifications/')
                 .then((response) => {
-                    console.log(response);
+                    console.log('got notifications response')
+                    console.log(response.data);
                     commit('set', response.data)
                     resolve(response.data)
                 })

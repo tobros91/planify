@@ -50,7 +50,7 @@ class Project extends Model
         $this->team()->attach($user->id, ['message' => $message]);
 
         if (auth()->user()->id !== $user->id) {
-            $user->notify(new InvitedToProject($this));
+            $user->notify(new InvitedToProject($this->id, auth()->user()->id, $message));
         }
     }
 

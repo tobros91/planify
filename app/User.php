@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\DatabaseNotification;
 use Illuminate\Auth\MustVerifyEmail;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -26,6 +27,11 @@ class User extends Authenticatable
     protected $appends = [
         'image_url'
     ];
+
+    public function notifications()
+    {
+        return $this->morphMany(DatabaseNotification::class, 'notifiable')->orderBy('created_at', 'desc');
+    }
 
     public function projects()
     {

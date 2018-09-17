@@ -63,7 +63,7 @@
 
             invite ()
             {
-                axios.post('/data/projects/'+this.project.id+'/teams', {
+                axios.post('/data/projects/'+this.project.id+'/invite', {
                     email: this.email,
                     message: this.message,
                 })

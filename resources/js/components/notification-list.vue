@@ -3,7 +3,7 @@
 
     <h1>Notifications</h1>
 
-    <ul class="list-group mt-3">
+    <ul class="list-group mt-3" v-if="!routerLoading">
 
         <li class="list-group-item" v-for="notification in notifications">
             <div class="row">
@@ -21,6 +21,9 @@
             No notifications
         </li>
     </ul>
+
+    <loader height="24" v-if="routerLoading"></loader>
+
 </div>
 </template>
 
@@ -31,6 +34,7 @@
     import assignedToTask from './notifications/assigned-to-task'
     import kickedFromTask from './notifications/kicked-from-task'
     import commentSubmited from './notifications/comment-submited'
+    import loader from './loader'
 
     export default {
 
@@ -40,7 +44,8 @@
             kickedFromProject,
             assignedToTask,
             kickedFromTask,
-            commentSubmited
+            commentSubmited,
+            loader
         },
 
         data ()
@@ -55,6 +60,15 @@
                 }
             }
         },
+
+        created ()
+        {
+            this.$store.dispatch('notifications/get')
+            .then(() => {
+                this.setRouterLoading(false)
+            })
+        },
+
 
         computed: {
 

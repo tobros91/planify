@@ -2,8 +2,8 @@
 
 namespace App\Notifications;
 
-use App\User;
 use App\Project;
+use App\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -13,16 +13,20 @@ class InvitedToProject extends Notification
 {
     use Queueable;
 
-    protected $project;
+    protected $project_id;
+    protected $user_id;
+    protected $message;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(Project $project)
+    public function __construct($project_id, $user_id, $message)
     {
-        $this->project = $project;
+        $this->project_id = $project_id;
+        $this->user_id = $user_id;
+        $this->message = $message;
     }
 
     /**
@@ -59,7 +63,28 @@ class InvitedToProject extends Notification
     public function toArray($notifiable)
     {
         return [
-            'project' => $this->project,
+            'project_id' => $this->project_id,
+            'user_id' => $this->user_id,
+            'message' => $this->message
+        ];
+    }
+
+
+    public static function toFrontEnd($notifiable_id, $data)
+    {
+        $user = User::find($data->user_id);
+        $project = Project::find($data->project_id);
+        $canRespond = $project->team()
+                              ->where('user_id', $notifiable_id)
+                              ->wherePivot('accepted_at', null)
+                              ->wherePivot('rejected_at', null)
+                              ->exists();
+
+        return [
+            'user' => $user,
+            'project' => $project,
+            'message' => $data->message,
+            'canRespond' => $canRespond,
         ];
     }
 }

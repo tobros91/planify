@@ -40,18 +40,6 @@
         </transition>
     </div>
 
-    <div class="container" v-if="!user.pivot.accepted_at">
-        <div class="row">
-            <div class="col">
-
-                <h3>Please respond to the invitation.</h3>
-
-                <button class="btn btn-success" @click="respond('accept')">Accept</button>
-                <button class="btn btn-danger" @click="respond('deny')">Deny</button>
-            </div>
-        </div>
-    </div>
-
 </div>
 </template>
 
@@ -87,29 +75,6 @@
             {
                 this.$store.dispatch('project/get', this.$route.params.project_id)
             },
-
-            respond (action)
-            {
-                axios.post('/data/projects/'+this.$route.params.project_id+'/teams/respond', {
-                    action: action,
-                })
-                .then((response) => {
-                    console.log(response.data);
-
-                    if (action == 'accept') {
-                        this.fetch()
-                        bus.$emit('flash', 'You are now a member of '+this.project.title)
-                        return
-                    }
-
-                    this.$router.push({ name: 'projects.list' })
-                    bus.$emit('flash', 'You rejected the invitation')
-
-                })
-                .catch((error) => {
-                    console.log(error.data);
-                });
-            }
 
         }
 
