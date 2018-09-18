@@ -148,7 +148,6 @@
                             task.classBorderLeft = taskStartInWeek == 1 ? '' : 'rounded-left'
                             task.classBorderRight = taskEndInWeek == 7 ? '' : 'rounded-right'
                             task.top = 20 + (20 * index)
-
                             tasks.push(task)
                         })
 

@@ -49,9 +49,9 @@ class InvitedToProject extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+                    ->subject($this->user->name.' invited you to join their project')
+                    ->line($this->user->name.' wants you to join '.$this->project->title)
+                    ->action('Respond', url('/notifications'));
     }
 
     /**

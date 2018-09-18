@@ -89,7 +89,9 @@
                     return;
                 }
 
-                axios.delete('/data/projects/'+this.project.id+'/teams/'+user_id)
+                axios.post('/data/projects/'+this.project.id+'/kick', {
+                    user_id: user_id
+                })
                 .then((response) => {
                     console.log(response);
                     this.$store.dispatch('project/get', this.project.id)

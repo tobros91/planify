@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\User;
 use App\Project;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
@@ -13,15 +14,17 @@ class KickedFromProject extends Notification
     use Queueable;
 
     protected $project;
+    protected $user;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(Project $project)
+    public function __construct(Project $project, User $user)
     {
         $this->project = $project;
+        $this->user = $user;
     }
 
     /**
@@ -32,7 +35,7 @@ class KickedFromProject extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail', 'database'];
+        return ['database'];
     }
 
     /**
@@ -59,6 +62,18 @@ class KickedFromProject extends Notification
     {
         return [
             'project' => $this->project,
+            'user' => $this->user
+        ];
+    }
+
+    public static function fromDatabase($notifiable_id, $data)
+    {
+        $user = User::find($data->user->id);
+        $project = Project::find($data->project->id);
+
+        return [
+            'user' => $user,
+            'project' => $project,
         ];
     }
 }

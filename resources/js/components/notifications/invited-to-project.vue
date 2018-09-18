@@ -9,7 +9,7 @@
                 <div class="card border-0">
                     <div class="card-body">
                         <h5 class="card-title">
-                            <b>{{ notification.data.user.name }}</b> invited you to join his project {{ notification.data.project.title }}
+                            <b>{{ notification.data.user.name }}</b> invited you to join their project {{ notification.data.project.title }}
                         </h5>
 
                         <h5 class="card-subtitle text-muted">"{{ notification.data.message }}"</h5>
