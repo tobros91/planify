@@ -94,8 +94,7 @@
 
             refreshImage ()
             {
-                console.log('do i run?')
-                this.user.image_url = this.user.image_url+'?'+moment().unix()
+                this.fetch()
             },
 
             fetch ()
