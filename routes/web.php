@@ -27,6 +27,7 @@ Route::get('/data/profile/{user?}', 'ProfileController@index');
 Route::get('/data/profile/{user}/avatar', 'ProfileController@avatar');
 
 Route::get('/data/notifications', 'NotificationController@index');
+Route::get('/data/notifications/markAllAsRead', 'NotificationController@markAllAsRead');
 Route::put('/data/notifications/{notification}/markAsRead', 'NotificationController@markAsRead');
 
 Route::get('data/projects', 'ProjectsController@index');

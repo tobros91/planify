@@ -9,7 +9,7 @@
                 <div class="card border-0">
                     <div class="card-body">
                         <h5 class="card-title">
-                            <b>{{ notification.data.user.name }}</b> commented on a task you are assigned to
+                            <b>{{ notification.data.user.name }}</b> commented on a task {{ notification.data.task.title }}
                         </h5>
 
                         <h5 class="card-subtitle text-muted">"{{ notification.data.comment.body }}"</h5>

@@ -1,11 +1,12 @@
 <template>
 <div class="container">
 
-    <h1>Notifications</h1>
-
-   <!--  <div class="btn btn-primary float-right" style="color: #fff;" title="Mark as read" @click="mark(notification)">
-        <i class="fa-bell" :class="{ 'far': notification.read_at, 'fas': !notification.read_at }"></i>
-    </div> -->
+    <h1>
+        Notifications <span v-if="num_unread > 0" class="text-info">{{ num_unread }}</span>
+         <div class="btn btn-primary float-right" style="color: #fff;" @click="markAll()" v-if="num_unread > 0">
+            Mark all as read
+        </div>
+    </h1>
 
     <ul class="list-group mt-3" v-if="!routerLoading">
 
@@ -17,7 +18,7 @@
         </li>
     </ul>
 
-    <loader height="24" v-if="routerLoading"></loader>
+    <loader height="100" v-if="routerLoading"></loader>
 
 </div>
 </template>
@@ -70,7 +71,14 @@
             notifications ()
             {
                 return this.$store.state.notifications.all
-            }
+            },
+
+            num_unread ()
+            {
+                return this.notifications.filter(notification => {
+                    return !notification.read_at
+                }).length
+            },
 
         },
 
@@ -85,6 +93,19 @@
                 axios.put('/data/notifications/'+notification.id+'/markAsRead')
                 .then((response) => {
                     console.log('mark notification response')
+                    console.log(response.data);
+                    this.$store.dispatch('notifications/get')
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+            },
+
+            markAll ()
+            {
+                axios.get('/data/notifications/markAllAsRead')
+                .then((response) => {
+                    console.log('markAll notification response')
                     console.log(response.data);
                     this.$store.dispatch('notifications/get')
                 })
