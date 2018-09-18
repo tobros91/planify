@@ -19,16 +19,15 @@ class CommentTest extends TestCase
     public function project_team_members_can_comment_on_tasks()
     {
         $task = factory(Task::class)->create();
-        // When
-        $this->actingAs($task->user);
 
+
+        $this->actingAs($task->user);
         $response = $this->json('POST', '/data/projects/'.$task->project->id.'/tasks/'.$task->id.'/comment', [
             'body' => 'test',
         ]);
 
-        // Then
-        $response->assertStatus(201);
 
+        $response->assertStatus(201);
         $this->assertDatabaseHas('comments', [
             'user_id' => $task->user->id,
             'task_id' => $task->id,
@@ -43,11 +42,9 @@ class CommentTest extends TestCase
         $task = factory(Task::class)->create();
         $user = factory(User::class)->create();
 
-        // When
         $this->actingAs($user);
         $response = $this->json('POST', '/data/projects/'.$task->project->id.'/tasks/'.$task->id.'/comment');
 
-        // Then
         $response->assertStatus(403);
     }
 
@@ -55,7 +52,6 @@ class CommentTest extends TestCase
     /** @test */
     public function all_assigned_users_except_poster_should_receive_notifications_on_new_comment()
     {
-        // Given
         Notification::fake();
 
         $task = factory(Task::class)->create();
@@ -63,14 +59,13 @@ class CommentTest extends TestCase
         $user2 = factory(User::class)->create();
         $task->team()->save($user2);
 
-        // When
-        $this->actingAs($task->user);
 
+        $this->actingAs($task->user);
         $response = $this->json('POST', '/data/projects/'.$task->project->id.'/tasks/'.$task->id.'/comment', [
             'body' => 'test',
         ]);
 
-        // Then
+
         Notification::assertNotSentTo(
             [$task->user],
             CommentSubmited::class

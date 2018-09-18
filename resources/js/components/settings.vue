@@ -8,7 +8,7 @@
             <div class="row">
                 <div class="col-3">
                     <div class="card">
-                        <uploader />
+                        <uploader @change="refreshImage()" />
                         <img class="card-img-top" :src="user.image_url">
                     </div>
                 </div>
@@ -31,7 +31,7 @@
                         :error="errors.email"
                     />
 
-                    <input-select
+                    <!-- <input-select
                         name="visibility"
                         label="Profile visibility"
                         v-model="user.visibility"
@@ -47,7 +47,7 @@
                                 value: 'team', text: 'Team'
                             },
                         ]"
-                    />
+                    /> -->
 
                 </div>
             </div>
@@ -91,6 +91,12 @@
         },
 
         methods: {
+
+            refreshImage ()
+            {
+                console.log('do i run?')
+                this.user.image_url = this.user.image_url+'?'+moment().unix()
+            },
 
             fetch ()
             {

@@ -38,7 +38,6 @@ Route::post('data/projects/{project}/invite', 'ProjectsController@invite');
 Route::post('data/projects/{project}/respondToInvitation', 'ProjectsController@respondToInvitation');
 Route::post('data/projects/{project}/kick', 'ProjectsController@kick');
 
-
 Route::get('data/projects/{project}/tasks', 'TasksController@index');
 Route::post('data/projects/{project}/tasks', 'TasksController@store');
 Route::get('data/projects/{project}/tasks/{task}', 'TasksController@show');

@@ -43,6 +43,7 @@
                     console.log('upload response')
                     console.log(response.data);
 
+                    this.$emit('change')
                     $('.file-input').val('')
                 })
                 .catch((error) => {

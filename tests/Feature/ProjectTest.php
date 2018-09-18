@@ -16,25 +16,21 @@ class ProjectTest extends TestCase
     /** @test */
     public function user_can_list_projects()
     {
-        // Given
         $user = factory(User::class)->create();
-
-        // When
         $project = factory(Project::class)->create([
             'title' => 'Project 1',
             'user_id' => $user->id
         ]);
-
         $project = factory(Project::class)->create([
             'title' => 'Project 2',
             'user_id' => $user->id
         ]);
 
+
         $this->actingAs($user);
 
-        // Then
-        $response = $this->get('/data/projects');
 
+        $response = $this->get('/data/projects');
         $response->assertStatus(200);
         $response->assertSee('Project 1');
         $response->assertSee('Project 2');
@@ -44,20 +40,17 @@ class ProjectTest extends TestCase
     /** @test */
     public function user_can_view_a_single_project()
     {
-        // Given
         $user = factory(User::class)->create();
-
-        // When
         $project = factory(Project::class)->create([
             'title' => 'Project 1',
             'user_id' => $user->id
         ]);
 
+
         $this->actingAs($user);
 
-        // Then
-        $response = $this->get('/data/projects/'.$project->id);
 
+        $response = $this->get('/data/projects/'.$project->id);
         $response->assertStatus(200);
         $response->assertSee('Project 1');
     }
@@ -67,18 +60,16 @@ class ProjectTest extends TestCase
     /** @test */
     public function user_can_store_project()
     {
-        // Given
         $user = factory(User::class)->create();
 
-        // When
-        $this->actingAs($user);
 
+        $this->actingAs($user);
         $response = $this->json('POST', '/data/projects', [
             'title' => 'Project 1',
             'description' => 'test'
         ]);
 
-        // Then
+
         $response->assertStatus(201)
                  ->assertJson([
                     'title' => 'Project 1',

@@ -38,10 +38,10 @@ class SettingsController extends Controller
                 'max:255',
                 Rule::unique('users')->ignore($user->id),
             ],
-            'visibility' => 'required|in:public,auth,team'
+            //'visibility' => 'required|in:public,auth,team'
         ]);
 
-        $user->update($request->only('name', 'email', 'visibility'));
+        $user->update($request->only('name', 'email'));
     }
 
 
@@ -52,6 +52,8 @@ class SettingsController extends Controller
         ]);
 
         $user = auth()->user();
+
+        $user->image()->delete();
 
         $upload            = $request->file('file');
         $original_basename = $upload->getClientOriginalName();
