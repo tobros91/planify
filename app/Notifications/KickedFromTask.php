@@ -3,6 +3,7 @@
 namespace App\Notifications;
 
 use App\Task;
+use App\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -13,15 +14,17 @@ class KickedFromTask extends Notification
     use Queueable;
 
     protected $task;
+    protected $user;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(Task $task)
+    public function __construct(Task $task, User $user)
     {
         $this->task = $task;
+        $this->user = $user;
     }
 
     /**
@@ -59,6 +62,20 @@ class KickedFromTask extends Notification
     {
         return [
             'task' => $this->task,
+            'user' => $this->user
+        ];
+    }
+
+
+    public static function fromDatabase($notifiable_id, $data)
+    {
+        $user = User::find($data->user->id);
+        $task = Task::find($data->task->id);
+
+        return [
+            'user' => $user,
+            'task' => $task,
+            'project' => $task->project
         ];
     }
 }

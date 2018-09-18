@@ -3,19 +3,14 @@
 
     <h1>Notifications</h1>
 
+   <!--  <div class="btn btn-primary float-right" style="color: #fff;" title="Mark as read" @click="mark(notification)">
+        <i class="fa-bell" :class="{ 'far': notification.read_at, 'fas': !notification.read_at }"></i>
+    </div> -->
+
     <ul class="list-group mt-3" v-if="!routerLoading">
 
         <li class="list-group-item" v-for="notification in notifications">
-            <div class="row">
-                <div class="col">
-                    <component :is="typeToComponent[notification.type]" :key="notification.id" :notification="notification"></component>
-                </div>
-                <div class="col-1">
-                    <div class="btn btn-primary float-right" style="color: #fff;" title="Mark as read" @click="mark(notification)">
-                        <i class="fa-bell" :class="{ 'far': notification.read_at, 'fas': !notification.read_at }"></i>
-                    </div>
-                </div>
-            </div>
+            <component :is="typeToComponent[notification.type]" :key="notification.id" :notification="notification"></component>
         </li>
         <li class="list-group-item" v-if="notifications.length === 0">
             No notifications

@@ -47,7 +47,7 @@
                 this.submited = true
                 this.errors = {}
 
-                axios.post('/data/tasks/'+this.task.id+'/comment', {
+                axios.post('/data/projects/'+this.task.project_id+'/tasks/'+this.task.id+'/comment', {
                     body: this.body,
                 })
                 .then((response) => {

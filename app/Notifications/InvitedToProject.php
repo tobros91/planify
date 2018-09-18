@@ -13,8 +13,8 @@ class InvitedToProject extends Notification
 {
     use Queueable;
 
-    protected $project_id;
-    protected $user_id;
+    protected $project;
+    protected $user;
     protected $message;
 
     /**
@@ -22,10 +22,10 @@ class InvitedToProject extends Notification
      *
      * @return void
      */
-    public function __construct($project_id, $user_id, $message)
+    public function __construct(Project $project, User $user, $message)
     {
-        $this->project_id = $project_id;
-        $this->user_id = $user_id;
+        $this->project = $project;
+        $this->user = $user;
         $this->message = $message;
     }
 
@@ -63,17 +63,17 @@ class InvitedToProject extends Notification
     public function toArray($notifiable)
     {
         return [
-            'project_id' => $this->project_id,
-            'user_id' => $this->user_id,
+            'project' => $this->project,
+            'user' => $this->user,
             'message' => $this->message
         ];
     }
 
 
-    public static function toFrontEnd($notifiable_id, $data)
+    public static function fromDatabase($notifiable_id, $data)
     {
-        $user = User::find($data->user_id);
-        $project = Project::find($data->project_id);
+        $user = User::find($data->user->id);
+        $project = Project::find($data->project->id);
         $canRespond = $project->team()
                               ->where('user_id', $notifiable_id)
                               ->wherePivot('accepted_at', null)

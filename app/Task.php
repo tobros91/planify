@@ -44,7 +44,7 @@ class Task extends Model
         $this->team()->attach($user->id, ['accepted_at' => now()]);
 
         if (auth()->user()->id !== $user->id) {
-            $user->notify(new AssignedToTask($this));
+            $user->notify(new AssignedToTask($this, auth()->user()));
         }
     }
 
@@ -57,7 +57,7 @@ class Task extends Model
         $this->team()->detach($user->id);
 
         if (auth()->user()->id !== $user->id) {
-            $user->notify(new KickedFromTask($this));
+            $user->notify(new KickedFromTask($this, auth()->user()));
         }
     }
 }

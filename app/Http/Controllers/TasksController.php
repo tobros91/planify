@@ -62,7 +62,7 @@ class TasksController extends Controller
 
         foreach ($task->team as $user) {
             if ($request->user()->id !== $user->id) {
-                $user->notify(new CommentSubmited($task));
+                $user->notify(new CommentSubmited($task, $comment, auth()->user()));
             }
         }
 

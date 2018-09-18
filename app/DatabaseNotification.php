@@ -13,6 +13,9 @@ class DatabaseNotification extends Model
 
     public function getDataAttribute($data)
     {
-        return $this->type::toFrontEnd($this->notifiable_id, json_decode($data));
+        if (method_exists($this->type, 'fromDatabase')) {
+            return $this->type::fromDatabase($this->notifiable_id, json_decode($data));
+        }
+        return $data;
     }
 }

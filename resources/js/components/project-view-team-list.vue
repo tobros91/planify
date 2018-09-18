@@ -21,6 +21,7 @@
                 <div class="col">
                     {{ user.name }}
                     <i class="fas fa-clock" title="Pending" v-if="!user.pivot.accepted_at && !user.pivot.rejected_at"></i>
+                    <i class="fas fa-ban" title="Rejected" v-if="user.pivot.rejected_at"></i>
                 </div>
                 <div class="col">
                     {{ user.email }}

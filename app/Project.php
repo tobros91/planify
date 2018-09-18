@@ -41,6 +41,7 @@ class Project extends Model
 
         return $query->whereHas('team', function ($query) use ($user) {
             $query->where('user_id', $user->id)
+                  ->whereNotNull('accepted_at')
                   ->whereNull('rejected_at');
         });
     }
@@ -50,7 +51,7 @@ class Project extends Model
         $this->team()->attach($user->id, ['message' => $message]);
 
         if (auth()->user()->id !== $user->id) {
-            $user->notify(new InvitedToProject($this->id, auth()->user()->id, $message));
+            $user->notify(new InvitedToProject($this, auth()->user(), $message));
         }
     }
 
@@ -63,7 +64,7 @@ class Project extends Model
         $this->team()->detach($user->id);
 
         if (auth()->user()->id !== $user->id) {
-            $user->notify(new KickedFromProject($this));
+            $user->notify(new KickedFromProject($this, auth()->user()));
         }
     }
 

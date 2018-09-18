@@ -95,7 +95,7 @@
             {
                 const action = this.isAssignedToTask(user) ? 'kick' : 'assign'
 
-                axios.post('/data/tasks/'+this.task.id+'/'+action, {
+                axios.post('/data/projects/'+this.project.id+'/tasks/'+this.task.id+'/'+action, {
                     user_id: user.id,
                 })
                 .then((response) => {

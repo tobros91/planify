@@ -16,7 +16,7 @@ class ProjectsController extends Controller
 
         $this->middleware('project.owner')->only('invite', 'kick');
 
-        $this->middleware('project.team')->only('show', 'respondToInvitation');
+        $this->middleware('project.team')->only('show');
     }
 
     public function index()
