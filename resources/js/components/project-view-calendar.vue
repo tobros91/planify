@@ -136,7 +136,7 @@
                     if(moment(date).day() == 1) {
                         var endOfWeek = moment(date).endOf('isoWeek')
 
-                        _.forEach(this.tasksInRange(date, 'isoWeek'), function(task, index) {
+                        this.tasksInRange(date, 'isoWeek').forEach((task, index) => {
 
                             var taskStartInWeek = (moment(task.starts_at).isSameOrAfter(moment(date), 'day') ? moment(task.starts_at).isoWeekday() : 1)
                             var taskEndInWeek = (moment(task.ends_at).isSameOrBefore(endOfWeek, 'day') ? moment(task.ends_at).isoWeekday() : 7)
@@ -197,7 +197,7 @@
                 var start = moment(startDate);
                 var end = moment(start).endOf(range)
 
-                var tasks = _.filter(this.project.tasks, function(t) {
+                var tasks = this.project.tasks.filter((t) => {
                     return moment(t.ends_at).isSameOrAfter(start, 'day')
                         &&
                         (
@@ -207,24 +207,16 @@
                         )
                 })
 
-                console.log('tasks in range: '+start.toISOString()+' - '+end.toISOString())
-                console.log(tasks)
-
                 return JSON.parse(JSON.stringify(tasks))
             },
 
-            tasksTop(task, firstDateInWeek) {
-                console.log('taskTop')
-                console.log(task)
-
-                console.log('firstDateInWeek')
-                console.log(firstDateInWeek)
-
+            tasksTop(task, firstDateInWeek)
+            {
                 let day = moment(firstDateInWeek).add(task.taskStartInWeek - 1, 'days')
-
                 let tasks = [];
                 let endOfWeek = moment(firstDateInWeek).endOf('isoWeek')
-                _.forEach(this.tasksInRange(day, 'day'), (task, index) => {
+
+                this.tasksInRange(day, 'day').forEach((task, index) => {
                     var taskStartInWeek = (moment(task.starts_at).isSameOrAfter(firstDateInWeek, 'day') ? moment(task.starts_at).weekday() : 1)
                     var taskEndInWeek = (moment(task.ends_at).isSameOrBefore(endOfWeek, 'day') ? moment(task.ends_at).weekday() : 7)
                     var taskWorkDaysInWeek = (taskEndInWeek > 5 ? 5 : taskEndInWeek) - (taskStartInWeek - 1)
@@ -234,15 +226,8 @@
                     tasks.push(task)
                 })
 
-                let tasksInDay = _.orderBy(tasks, ['taskStartInWeek', 'taskWorkDaysInWeek'], ['asc', 'desc']);
-
-                console.log('task spanning over '+day.toISOString())
-                console.log(tasksInDay)
-
-                let index = _.findIndex(tasksInDay, ['id', task.id]);
-
-                console.log('index')
-                console.log(index)
+                let tasksInDay = _.orderBy(tasks, ['taskStartInWeek', 'taskWorkDaysInWeek'], ['asc', 'desc'])
+                let index = _.findIndex(tasksInDay, ['id', task.id])
 
                 return ((index + 1) * 20) + index
             },
